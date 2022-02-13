@@ -4,7 +4,6 @@ import 'package:slide_puzzle/src/game/game_bloc.dart';
 import 'package:slide_puzzle/src/model/models.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
 import 'package:slide_puzzle/src/ui/homepage.dart';
-import 'package:slide_puzzle/src/ui/levelspage.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +28,7 @@ class _MyAppState extends State<MyApp> {
         List.filled(10, 0)
     );
     _puzzleBloc = PuzzleBloc(
-        1, 10,TileMovementStatus.nothingTapped
+        1,TileMovementStatus.nothingTapped
     );
   }
 

@@ -26,7 +26,13 @@ class _ChooseLevelPageState extends State<ChooseLevelPage> {
               for(int i = 1;i <= 5;i++)  SizedBox(
                 width: 64,
                 height: 64,
-                child: _game.puzzleStatus[i-1] == PuzzleStatus.complete ? TextButton(child: Text("$i"),onPressed: () => _game.add(StartLevel(i,_puzzle))) : Center(child: Text("locked")),
+                child: _game.puzzleStatus[i-1] == PuzzleStatus.complete ? TextButton(child: Text("$i"),onPressed: () => _game.add(StartLevel(i,_puzzle))) : Center(child: Icon(Icons.lock)),
+                // child: Column(
+                //   children: [
+                //     _game.puzzleStatus[i-1] == PuzzleStatus.complete ? TextButton(child: Text("$i"),onPressed: () => _game.add(StartLevel(i,_puzzle))) : Center(child: Icon(Icons.lock)),
+                //     // for(int i = 0;i<3;i++) Icon(Icons.star),
+                //   ],
+                // )
               )
             ],
           ),
@@ -36,7 +42,7 @@ class _ChooseLevelPageState extends State<ChooseLevelPage> {
               for(int i = 6;i <= 10;i++)  SizedBox(
                 width: 64,
                 height: 64,
-                child: _game.puzzleStatus[i-1] == PuzzleStatus.complete ? TextButton(child: Text("$i"),onPressed: () => _game.add(StartLevel(i,_puzzle))) : Center(child: Text("locked")),
+                child: _game.puzzleStatus[i-1] == PuzzleStatus.complete ? TextButton(child: Text("$i"),onPressed: () => _game.add(StartLevel(i,_puzzle))) : Center(child: Icon(Icons.lock)),
               )
             ],
           ),

@@ -8,8 +8,15 @@ class PuzzleInitialized extends PuzzleEvent {
 
   final int level;
 
-  @override
   List<Object> get props => [level];
+}
+
+class PressedTile extends PuzzleEvent{
+  PressedTile(this.tile);
+
+  final Tile tile;
+
+  List<Object> get props => [tile];
 }
 
 class TileTapped extends PuzzleEvent {
@@ -17,7 +24,6 @@ class TileTapped extends PuzzleEvent {
 
   final Tile tile;
 
-  @override
   List<Object> get props => [tile];
 }
 
@@ -26,7 +32,6 @@ class TileUnTapped extends PuzzleEvent {
 
   final Tile tile;
 
-  @override
   List<Object> get props => [tile];
 }
 
@@ -36,7 +41,6 @@ class SwapTiles extends PuzzleEvent {
   final Tile tappedtile;
   final Tile nexttile;
 
-  @override
   List<Object> get props => [tappedtile,nexttile];
 }
 
@@ -50,7 +54,6 @@ class SwapKingTiles extends PuzzleEvent{
   final List<Tile> kingtile;
   final Tile nexttile;
 
-  @override
   List<Object> get props => [kingtile,nexttile];
 
 }

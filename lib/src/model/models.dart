@@ -80,7 +80,6 @@ class Tile extends Equatable {
   List<Object> get props => [
     value,
     currentPosition,
-    // tapped,
   ];
 }
 
@@ -118,6 +117,11 @@ class Puzzle{
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 4)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 4)),
         ]);
+        tiles.add([
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 0,y: 5)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 1,y: 5)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 5)),
+        ]);
         break;
       case 2:
         tiles.add([
@@ -134,6 +138,11 @@ class Puzzle{
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 2)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 2)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 2)),
+        ]);
+        tiles.add([
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 0,y: 3)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 1,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 3)),
         ]);
         break;
     }
@@ -214,9 +223,13 @@ class ChessImage extends StatelessWidget {
         height: 256,
       );
     }else if(chessPieces == ChessPieces.Space){
-      // still in progress
       return Container();
+    }else if(chessPieces == ChessPieces.End){
+      return Icon(Icons.flag,size: 50,);
     }
+
     return CircularProgressIndicator();
   }
 }
+
+enum NextDirection{Left,Right,Top,Bottom}

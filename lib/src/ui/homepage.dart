@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                           if (state is OptionPageState) {
                             return OptionPage();
                           }
+                          /// TODO: make this state to puzzle bloc
                           if (state is ToNextLevelState) {
                             return PuzzleWinPage();
                           }
@@ -79,6 +80,8 @@ class _HomePageState extends State<HomePage> {
             );
           }else if(state is PuzzleLoseState){
             return PuzzleLosePage();
+          }else if(state is PuzzleWinState){
+            return PuzzleWinPage();
           }
           return LevelPage();
         },

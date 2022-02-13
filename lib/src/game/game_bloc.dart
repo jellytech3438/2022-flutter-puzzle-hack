@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:core';
-import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -20,6 +18,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     // state is output
     // on<input>(function that emit new state or just do something)
     on<ChooseLevel>(_onChooseLevel);
+    on<Option>(_onOption);
     on<StartLevel>(_onStartLevel);
     on<GameInitialized>(_onGameInitialized);
   }
@@ -34,23 +33,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   // Event Handler
 
-  Puzzle _generatePuzzle(){
-    Puzzle puzzle = Puzzle(tiles: []);
-    puzzle.initializeTiles(level);
-    return puzzle;
-  }
-
   void _onGameInitialized(GameInitialized event, Emitter<GameState> emit,) {
-    final puzzle = _generatePuzzle();
     emit(
-      GameState(
-        puzzle: puzzle,
-      ),
+      GameState(),
     );
   }
 
   void _onChooseLevel(ChooseLevel event, Emitter<GameState> emit,) {
     emit(ChooseLevelState());
+  }
+
+  void _onOption(Option event, Emitter<GameState> emit){
+    emit(OptionPageState());
   }
 
   void _onStartLevel(StartLevel event, Emitter<GameState> emit,) {

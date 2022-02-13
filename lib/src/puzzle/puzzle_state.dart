@@ -5,14 +5,11 @@ class PuzzleState {
   const PuzzleState({
     this.puzzle = const Puzzle(tiles: []),
     this.puzzleStatus = PuzzleStatus.incomplete,
-    // this.tileMovementStatus = TileMovementStatus.nothingTapped,
   });
 
   final Puzzle puzzle;
 
   final PuzzleStatus puzzleStatus;
-
-  // final TileMovementStatus tileMovementStatus;
 
   PuzzleState copyWith({
     Puzzle? puzzle,
@@ -31,4 +28,8 @@ class IsHomeState extends PuzzleState{
 
 class PuzzleLoseState extends PuzzleState{
   PuzzleLoseState() : super();
+}
+
+class PuzzleWinState extends PuzzleState{
+  PuzzleWinState() : super();
 }

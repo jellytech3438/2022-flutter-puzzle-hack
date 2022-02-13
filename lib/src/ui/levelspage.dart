@@ -76,60 +76,10 @@ class _LevelPageState extends State<LevelPage> {
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
-                            print("Before : ${_puzzleBloc.tileMovementStatus}");
-
-                            if(_puzzleBloc.tileMovementStatus == TileMovementStatus.tapped){
-
-                              if(t == _puzzleBloc.tiletapped && !_puzzleBloc.tiletapped!.isKing()){
-                                /// cur and pre are not king, cur is pre
-                                _puzzleBloc.add(TileUnTapped(t));
-                                _puzzleBloc.tileMovementStatus = TileMovementStatus.nothingTapped;
-                                _puzzleBloc.tiletapped = null;
-                              }else if( t.isKing() && _puzzleBloc.tiletapped!.isKing() ){
-                                /// cur and pre are king, cur is pre
-                                _puzzleBloc.add(TileUnTapped(t));
-                                _puzzleBloc.tileMovementStatus = TileMovementStatus.nothingTapped;
-                                _puzzleBloc.tiletapped = null;
-                              }else if(t.tapped == false){
-                                /// not matter what will tapped on this
-                                _puzzleBloc
-                                  ..add(TileUnTapped(_puzzleBloc.tiletapped!))
-                                  ..add(TileTapped(t))
-                                  ..tileMovementStatus = TileMovementStatus.tapped
-                                  ..tiletapped = t;
-                              }else if(t.tapped == true && !t.isKing() && !_puzzleBloc.tiletapped!.isKing()){
-                                _puzzleBloc
-                                  ..add(TileUnTapped(_puzzleBloc.tiletapped!))
-                                  ..add(SwapTiles(_puzzleBloc.tiletapped!, t))
-                                  ..tileMovementStatus = TileMovementStatus.nothingTapped
-                                  ..tiletapped = null;
-                              }else if(t.tapped == true && !t.isKing() && _puzzleBloc.tiletapped!.isKing()){
-                                List<Tile> king = [];
-                                if(t.value == ChessPieces.KingTopLeft){
-                                  king = [t,_puzzleBloc.state.puzzle.tiles[t.currentPosition.y][t.currentPosition.x+1],_puzzleBloc.state.puzzle.tiles[t.currentPosition.y+1][t.currentPosition.x],_puzzleBloc.state.puzzle.tiles[t.currentPosition.y+1][t.currentPosition.x+1]];
-                                }else if(t.value == ChessPieces.KingTopRight){
-                                  king = [_puzzleBloc.state.puzzle.tiles[t.currentPosition.y][t.currentPosition.x-1],t,_puzzleBloc.state.puzzle.tiles[t.currentPosition.y+1][t.currentPosition.x-1],_puzzleBloc.state.puzzle.tiles[t.currentPosition.y+1][t.currentPosition.x]];
-                                }else if(t.value == ChessPieces.KingButtomLeft){
-                                  king = [_puzzleBloc.state.puzzle.tiles[t.currentPosition.y-1][t.currentPosition.x],_puzzleBloc.state.puzzle.tiles[t.currentPosition.y-1][t.currentPosition.x+1],t,_puzzleBloc.state.puzzle.tiles[t.currentPosition.y][t.currentPosition.x+1]];
-                                }else if(t.value == ChessPieces.KingButtomRight){
-                                  king = [_puzzleBloc.state.puzzle.tiles[t.currentPosition.y-1][t.currentPosition.x-1],_puzzleBloc.state.puzzle.tiles[t.currentPosition.y-1][t.currentPosition.x],_puzzleBloc.state.puzzle.tiles[t.currentPosition.y][t.currentPosition.x-1],t];
-                                }
-                                _puzzleBloc
-                                  ..add(TileUnTapped(_puzzleBloc.tiletapped!))
-                                  ..add(SwapKingTiles(king, t))
-                                  ..tileMovementStatus = TileMovementStatus.nothingTapped
-                                  ..tiletapped = null;
-                              }
-                            }else {
-                              _puzzleBloc
-                                ..add(TileTapped(t))
-                                ..tileMovementStatus = TileMovementStatus.tapped
-                                ..tiletapped = t;
-                            }
-
-                            print("After : ${_puzzleBloc.tileMovementStatus}");
+                            _puzzleBloc.add(PressedTile(t));
                           });
                         },
+                        // onLongPress: ,
                         child: Container(
                             decoration: BoxDecoration(
                                 border: returnBorder(t),
