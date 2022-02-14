@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
 import 'package:slide_puzzle/src/model/models.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
@@ -53,16 +54,50 @@ class _LevelPageState extends State<LevelPage> {
     PuzzleBloc _puzzleBloc = BlocProvider.of<PuzzleBloc>(context);
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(child: Text('return'),onPressed: () => _puzzleBloc.add(IsHome()),),
-            TextButton(child: Text('reset puzzle'),onPressed: () => _puzzleBloc.add(PuzzleReset()),),
-            TextButton(child: Text('option'),onPressed: () => _gameBloc.add(GameInitialized()),),
+            TextButton(
+              child: Text(
+                'return',
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(fontSize: 20),
+                ),
+              ),
+              onPressed: () => _puzzleBloc.add(IsHome()),
+            ),
+            Padding(padding: EdgeInsets.all(20),),
+            TextButton(
+              child: Text(
+                'reset puzzle',
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(fontSize: 20),
+                ),
+              ),
+              onPressed: () => _puzzleBloc.add(PuzzleReset()),
+            ),
+            Padding(padding: EdgeInsets.all(20),),
+            TextButton(
+              child: Text(
+                'option',
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(fontSize: 20),
+                ),
+              ),
+              onPressed: () => _gameBloc.add(GameInitialized()),
+            ),
           ],
         ),
-        Text('Left steps : ${_puzzleBloc.leftmovesteps}'),
+        Padding(padding: EdgeInsets.all(20),),
+        Text(
+          'Left steps : ${_puzzleBloc.leftmovesteps}',
+          style: GoogleFonts.lato(
+            textStyle: TextStyle(fontSize: 20),
+          ),
+        ),
+        Padding(padding: EdgeInsets.all(20),),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: _puzzleBloc.state.puzzle.tiles.map((list) {
@@ -71,8 +106,8 @@ class _LevelPageState extends State<LevelPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   for(Tile t in list) SizedBox(
-                      width: 64.0,
-                      height: 64.0,
+                      width: 75.0,
+                      height: 75.0,
                       child: GestureDetector(
                         onTap: () {
                           setState(() {

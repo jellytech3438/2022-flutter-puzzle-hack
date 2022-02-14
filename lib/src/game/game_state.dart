@@ -1,22 +1,10 @@
 part of 'game_bloc.dart';
 
 class GameState {
-  const GameState({
-    this.puzzleStatus = PuzzleStatus.incomplete,
-    // this.tileMovementStatus = TileMovementStatus.nothingTapped,
-  });
+  const GameState();
 
-  final PuzzleStatus puzzleStatus;
-
-  // final TileMovementStatus tileMovementStatus;
-
-  GameState copyWith({
-    Puzzle? puzzle,
-    PuzzleStatus? puzzleStatus,
-  }) {
-    return GameState(
-      puzzleStatus: puzzleStatus ?? this.puzzleStatus
-    );
+  GameState copyWith() {
+    return GameState();
   }
 }
 
