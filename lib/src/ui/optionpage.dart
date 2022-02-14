@@ -28,6 +28,7 @@ class _OptionPageState extends State<OptionPage> {
 
     GameBloc _game = BlocProvider.of<GameBloc>(context);
     PuzzleBloc _puzzle = BlocProvider.of<PuzzleBloc>(context);
+    isBlack = _puzzle.isBlack;
 
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{

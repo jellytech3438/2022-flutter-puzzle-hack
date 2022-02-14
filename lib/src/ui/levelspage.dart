@@ -78,16 +78,16 @@ class _LevelPageState extends State<LevelPage> {
               ),
               onPressed: () => _puzzleBloc.add(PuzzleReset()),
             ),
-            Padding(padding: EdgeInsets.all(20),),
-            TextButton(
-              child: Text(
-                'option',
-                style: GoogleFonts.lato(
-                  textStyle: TextStyle(fontSize: 20),
-                ),
-              ),
-              onPressed: () => _gameBloc.add(GameInitialized()),
-            ),
+            // Padding(padding: EdgeInsets.all(20),),
+            // TextButton(
+            //   child: Text(
+            //     'option',
+            //     style: GoogleFonts.lato(
+            //       textStyle: TextStyle(fontSize: 20),
+            //     ),
+            //   ),
+            //   onPressed: () => _gameBloc.add(GameInitialized()),
+            // ),
           ],
         ),
         Padding(padding: EdgeInsets.all(20),),
