@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,10 +60,9 @@ class _HomePageState extends State<HomePage> {
                           if (state is OptionPageState) {
                             return OptionPage();
                           }
-                          /// TODO: make this state to puzzle bloc
-                          if (state is ToNextLevelState) {
-                            return PuzzleWinPage();
-                          }
+                          // if (state is ToNextLevelState) {
+                          //   return PuzzleWinPage();
+                          // }
                           return Column(
                             children: [
                               Center(
@@ -211,7 +208,7 @@ class _HomePageState extends State<HomePage> {
             if(_gameBloc.levelStars[state.completelevel] <= state.getstar){
               _gameBloc.levelStars[state.completelevel] = state.getstar;
             }
-            return PuzzleWinPage();
+            return PuzzleWinPage(state.getstar);
           }
           return LevelPage();
         },

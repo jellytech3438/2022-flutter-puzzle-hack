@@ -27,6 +27,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   late bool eatEnemy;
 
+  bool isBlack = true;
+
   TileMovementStatus tileMovementStatus;
 
   Tile? tiletapped;

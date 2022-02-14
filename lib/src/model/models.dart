@@ -158,67 +158,110 @@ enum ScreenViewType {tutorialView, controlView, completeView}
 
 class ChessImage extends StatelessWidget {
 
-  ChessImage(this.chessPieces);
+  ChessImage(this.chessPieces,this.isBlack);
 
   final ChessPieces chessPieces;
+
+  final bool isBlack;
 
   @override
   Widget build(BuildContext context) {
     if(chessPieces == ChessPieces.Pawn){
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackPawn.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhitePawn.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.Bishop){
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackBishop.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteBishop.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.Knight){
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackKnight.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteKnight.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.Queen){
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackQueen.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteQueen.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.Rook){
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackRook.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteRook.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.KingTopLeft){
-      // still in progress
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackKingTopLeft.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteKingTopLeft.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.KingTopRight){
-      // still in progress
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackKingTopRight.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteKingTopRight.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.KingButtomLeft){
-      // still in progress;
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackKingButtomLeft.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteKingButtomLeft.png',
         width: 256,
         height: 256,
       );
     }else if(chessPieces == ChessPieces.KingButtomRight){
-      // still in progress
-      return Image.asset(
+      return isBlack ? Image.asset(
         'lib/assets/BlackKingButtomRight.png',
+        width: 256,
+        height: 256,
+      ):
+      Image.asset(
+        'lib/assets/WhiteKingButtomRight.png',
         width: 256,
         height: 256,
       );
@@ -260,5 +303,47 @@ class _OnHoverState extends State<OnHover> {
     setState(() {
       this.isHovered = isHovered;
     });
+  }
+}
+
+class MySelectionItem extends StatelessWidget {
+  final String? title;
+  final bool isForList;
+
+  const MySelectionItem({Key? key, this.title, this.isForList = true}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 60.0,
+      child: isForList
+          ? Padding(
+        child: _buildItem(context),
+        padding: EdgeInsets.all(10.0),
+      )
+          : Card(
+        margin: EdgeInsets.symmetric(horizontal: 10.0),
+        child: Stack(
+          children: <Widget>[
+            _buildItem(context),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Icon(Icons.arrow_drop_down),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildItem(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.center,
+      child: FittedBox(
+          child: Text(
+            title!,
+          )),
+    );
   }
 }

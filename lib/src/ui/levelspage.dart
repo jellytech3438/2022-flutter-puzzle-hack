@@ -122,7 +122,7 @@ class _LevelPageState extends State<LevelPage> {
                                     .currentPosition.isEven() ? Colors
                                     .white : Colors.black45
                             ),
-                            child: ChessImage(t.value)
+                            child: ChessImage(t.value,_puzzleBloc.isBlack)
                         ),
                       )
                   ),
