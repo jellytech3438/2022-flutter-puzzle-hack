@@ -31,5 +31,8 @@ class PuzzleLoseState extends PuzzleState{
 }
 
 class PuzzleWinState extends PuzzleState{
-  PuzzleWinState() : super();
+  PuzzleWinState(this.completelevel,this.getstar) : super();
+
+  final int completelevel;
+  final int getstar;
 }

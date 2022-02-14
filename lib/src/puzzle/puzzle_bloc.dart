@@ -25,9 +25,34 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   late int leftmovesteps;
 
+  late bool eatEnemy;
+
   TileMovementStatus tileMovementStatus;
 
   Tile? tiletapped;
+
+  int _calculateStar(){
+    switch(this.level){
+      case 1:
+        if(leftmovesteps >= 3){
+          return 3;
+        }
+        break;
+      case 2:
+        if(leftmovesteps >= 5 && eatEnemy){
+          return 3;
+        }else if(leftmovesteps <= 5 && eatEnemy){
+          return 2;
+        }else if(leftmovesteps >= 5 && !eatEnemy){
+          return 2;
+        }else if(leftmovesteps <= 5 && !eatEnemy){
+          return 1;
+        }
+        break;
+      // case 3:
+    }
+    return 0;
+  }
 
   Puzzle _generatePuzzle(){
     Puzzle puzzle = Puzzle(tiles: []);
@@ -89,7 +114,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
           ..tileMovementStatus = TileMovementStatus.nothingTapped
           ..tiletapped = null;
       }else if(event.tile.tapped == true && !event.tile.isKing() && this.tiletapped!.isKing()){
-        print('test');
         List<Tile> king = [];
         if(this.tiletapped!.value == ChessPieces.KingTopLeft){
           king
@@ -140,8 +164,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
     int maxX = this.state.puzzle.tiles[0].length;
     int maxY = this.state.puzzle.tiles.length;
-    print(maxX);
-    print(maxY);
 
     if(tappedTile.value == ChessPieces.Pawn){
       Position p = tappedTile.currentPosition;
@@ -1042,8 +1064,10 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     final tiles = this.state.puzzle.tiles;
 
     if(nextspace.value == ChessPieces.End){
+      /// TODO : make the score calculate in this state (or this event)
+      int star = _calculateStar();
       emit(
-        PuzzleWinState()
+        PuzzleWinState(level,star)
       );
     }else{
       /// first get the direction of next move

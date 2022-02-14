@@ -21,10 +21,10 @@ class _ChooseLevelPageState extends State<ChooseLevelPage> {
     return Container(
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for(int i = 1;i <= 5;i++)  Padding(
+              for(int i = 1;i <= 10;i++)  Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: 75,
@@ -47,10 +47,11 @@ class _ChooseLevelPageState extends State<ChooseLevelPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                for(int i = 0;i < _game.levelStars[i];i++) Icon(
+                                for(int j = 0;j < _game.levelStars[i];j++) Icon(
                                   Icons.star,
+                                  color: Colors.amber,
                                 ),
-                                for(int i = 0;i < 3 - _game.levelStars[i];i++) Icon(
+                                for(int j = 0;j < 3 - _game.levelStars[i];j++) Icon(
                                   Icons.star_border,
                                 )
                               ],
@@ -62,47 +63,47 @@ class _ChooseLevelPageState extends State<ChooseLevelPage> {
               )
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for(int i = 6;i <= 10;i++)  Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 75,
-                  height: 75,
-                  child: _game.puzzleStatus[i-1] == PuzzleStatus.complete
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: TextButton(
-                                  child: Text(
-                                    "$i",
-                                    style: GoogleFonts.lato(
-                                      textStyle: TextStyle(fontSize: 20),
-                                    ),
-                                  ),
-                                  onPressed: () => _game.add(StartLevel(i,_puzzle))
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                for(int i = 0;i < _game.levelStars[i];i++) Icon(
-                                  Icons.star,
-                                ),
-                                for(int i = 0;i < 3 - _game.levelStars[i];i++) Icon(
-                                  Icons.star_border,
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      : Center(child: Icon(Icons.lock)),
-                ),
-              )
-            ],
-          ),
+          // Wrap(
+          //   // mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     for(int i = 6;i <= 10;i++)  Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: Container(
+          //         width: 75,
+          //         height: 75,
+          //         child: _game.puzzleStatus[i-1] == PuzzleStatus.complete
+          //             ? Column(
+          //                 mainAxisAlignment: MainAxisAlignment.center,
+          //                 children: [
+          //                   Expanded(
+          //                     child: TextButton(
+          //                         child: Text(
+          //                           "$i",
+          //                           style: GoogleFonts.lato(
+          //                             textStyle: TextStyle(fontSize: 20),
+          //                           ),
+          //                         ),
+          //                         onPressed: () => _game.add(StartLevel(i,_puzzle))
+          //                     ),
+          //                   ),
+          //                   Row(
+          //                     mainAxisAlignment: MainAxisAlignment.center,
+          //                     children: [
+          //                       for(int i = 0;i < _game.levelStars[i];i++) Icon(
+          //                         Icons.star,
+          //                       ),
+          //                       for(int i = 0;i < 3 - _game.levelStars[i];i++) Icon(
+          //                         Icons.star_border,
+          //                       )
+          //                     ],
+          //                   )
+          //                 ],
+          //               )
+          //             : Center(child: Icon(Icons.lock)),
+          //       ),
+          //     )
+          //   ],
+          // ),
           TextButton(
             child: Text(
               'return',

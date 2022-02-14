@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,9 +25,6 @@ class _HomePageState extends State<HomePage> {
   late PuzzleBloc _puzzleBloc;
 
   List<bool> onHover = [false,false,false];
-  List<double> elevation = [4.0,4.0,4.0];
-  List<double> scale = [1.0,1.0,1.0];
-  List<Offset> translate = [Offset(0,0),Offset(0,0),Offset(0,0)];
 
   @override
   void initState() {
@@ -69,30 +68,26 @@ class _HomePageState extends State<HomePage> {
                           }
                           return Column(
                             children: [
-                              Container(
-                                width: 150,
-                                decoration: onHover[0] == false ? BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black,  // red as border color
-                                  ),
-                                ) : null ,
-                                padding: EdgeInsets.all(20),
-                                child: Center(
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(30),
-                                    child:Transform.translate(
-                                      offset: translate[0] ,
-                                      child: Transform.scale(
-                                        alignment: Alignment.center,
-                                        scale: scale[0],
-                                        child: Material(
-                                          // elevation: elevation,
-                                          child:Text(
+                              Center(
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child:GestureDetector(
+                                    child: AnimatedContainer(
+                                      width: 180,
+                                      decoration:BoxDecoration(
+                                        border: onHover[0] ? Border() : Border.all(color: Colors.black,),
+                                      ),
+                                      padding: EdgeInsets.all(20),
+                                      duration: Duration(milliseconds: 300),
+                                      transform: Matrix4.identity(),
+                                      child: AnimatedDefaultTextStyle(
+                                        style: onHover[0] ? TextStyle(fontSize: 28) : TextStyle(fontSize: 20),
+                                        duration: Duration(milliseconds: 300),
+                                        child: Center(
+                                          child: Text(
                                             'start game',
-                                            style: GoogleFonts.lato(
-                                              textStyle: TextStyle(fontSize: 20),
-                                            ),
-                                          )
+                                            style: GoogleFonts.lato(),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -101,127 +96,105 @@ class _HomePageState extends State<HomePage> {
                                         _gameBloc.add(ChooseLevel());
                                       });
                                     },
-                                    onHover: (value){
-                                      onHover[0] = value;
-                                      if(value){
-                                        setState((){
-                                          elevation[0] = 20.0;
-                                          scale[0] = 1.5;
-                                          translate[0] = Offset(0,0);
-                                        });
-                                      }else{
-                                        setState((){
-                                          elevation[0] = 4.0;
-                                          scale[0] = 1.0;
-                                          translate[0] = Offset(0,0);
-                                        });
-                                      }
-                                    },
                                   ),
+                                  onEnter: (value){
+                                    setState((){
+                                      onHover[0] = true;
+                                    });
+                                  },
+                                  onExit: (value){
+                                    setState((){
+                                      onHover[0] = false;
+                                    });
+                                  }
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(20),
                               ),
-                              Container(
-                                width: 150,
-                                decoration: onHover[1] == false ? BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black,  // red as border color
-                                  ),
-                                ) : null ,
-                                padding: EdgeInsets.all(20),
-                                child: Center(
-                                  child: InkWell(
-                                    child:Transform.translate(
-                                      offset: translate[1] ,
-                                      child: Transform.scale(
-                                        alignment: Alignment.center,
-                                        scale: scale[1],
-                                        child: Material(
-                                          // elevation: elevation,
-                                            child:Text(
+                              Center(
+                                child: MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child:GestureDetector(
+                                      child: AnimatedContainer(
+                                        width: 180,
+                                        decoration:BoxDecoration(
+                                          border: onHover[1] ? Border() : Border.all(color: Colors.black,),
+                                        ),
+                                        padding: EdgeInsets.all(20),
+                                        duration: Duration(milliseconds: 300),
+                                        transform: Matrix4.identity(),
+                                        child: AnimatedDefaultTextStyle(
+                                          style: onHover[1] ? TextStyle(fontSize: 28) : TextStyle(fontSize: 20),
+                                          duration: Duration(milliseconds: 300),
+                                          child: Center(
+                                            child: Text(
                                               'option',
-                                              style: GoogleFonts.lato(
-                                                textStyle: TextStyle(fontSize: 20),
-                                              ),
-                                            )
+                                              style: GoogleFonts.lato(),
+                                            ),
+                                          ),
                                         ),
                                       ),
+                                      onTap: () {
+                                        setState(() {
+                                          _gameBloc.add(Option());
+                                        });
+                                      },
                                     ),
-                                    onTap: () {
-                                      setState(() {
-                                        _gameBloc.add(Option());
+                                    onEnter: (value){
+                                      setState((){
+                                        onHover[1] = true;
                                       });
                                     },
-                                    onHover: (value){
-                                      onHover[1] = value;
-                                      if(value){
-                                        setState((){
-                                          elevation[1] = 20.0;
-                                          scale[1] = 1.5;
-                                          translate[1] = Offset(0,0);
-                                        });
-                                      }else{
-                                        setState((){
-                                          elevation[1] = 4.0;
-                                          scale[1] = 1.0;
-                                          translate[1] = Offset(0,0);
-                                        });
-                                      }
-                                    },
-                                  ),
+                                    onExit: (value){
+                                      setState((){
+                                        onHover[1] = false;
+                                      });
+                                    }
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(20),
                               ),
-                              Container(
-                                width: 150,
-                                decoration: onHover[2] == false ? BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black,  // red as border color
-                                  ),
-                                ) : null ,
-                                padding: EdgeInsets.all(20),
-                                child: Center(
-                                  child: InkWell(
-                                    child:Transform.translate(
-                                      offset: translate[2] ,
-                                      child: Transform.scale(
-                                        alignment: Alignment.center,
-                                        scale: scale[2],
-                                        child: Material(
-                                          // elevation: elevation,
-                                            child:Text(
+                              Center(
+                                child: MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child:GestureDetector(
+                                      child: AnimatedContainer(
+                                        width: 180,
+                                        decoration:BoxDecoration(
+                                          border: onHover[2] ? Border() : Border.all(color: Colors.black,),
+                                        ),
+                                        padding: EdgeInsets.all(20),
+                                        duration: Duration(milliseconds: 300),
+                                        transform: Matrix4.identity(),
+                                        child: AnimatedDefaultTextStyle(
+                                          style: onHover[2] ? TextStyle(fontSize: 28) : TextStyle(fontSize: 20),
+                                          duration: Duration(milliseconds: 300),
+                                          child: Center(
+                                            child: Text(
                                               'exit',
-                                              style: GoogleFonts.lato(
-                                                textStyle: TextStyle(fontSize: 20),
-                                              ),
-                                            )
+                                              style: GoogleFonts.lato(),
+                                            ),
+                                          ),
                                         ),
                                       ),
+                                      onTap: () {
+                                        setState(() {
+                                          SystemNavigator.pop();
+                                        });
+                                      },
                                     ),
-                                    onTap: () {
-                                      SystemNavigator.pop();
+                                    onEnter: (value){
+                                      setState((){
+                                        onHover[2] = true;
+                                      });
                                     },
-                                    onHover: (value){
-                                      onHover[2] = value;
-                                      if(value){
-                                        setState((){
-                                          elevation[2] = 20.0;
-                                          scale[2] = 1.5;
-                                          translate[2] = Offset(0,0);
-                                        });
-                                      }else{
-                                        setState((){
-                                          elevation[2] = 4.0;
-                                          scale[2] = 1.0;
-                                          translate[2] = Offset(0,0);
-                                        });
-                                      }
-                                    },
-                                  ),
+                                    onExit: (value){
+                                      setState((){
+                                        onHover[2] = false;
+                                      });
+                                    }
                                 ),
                               ),
                             ],
@@ -234,6 +207,10 @@ class _HomePageState extends State<HomePage> {
           }else if(state is PuzzleLoseState){
             return PuzzleLosePage();
           }else if(state is PuzzleWinState){
+            print("get star : " + state.getstar.toString());
+            if(_gameBloc.levelStars[state.completelevel] <= state.getstar){
+              _gameBloc.levelStars[state.completelevel] = state.getstar;
+            }
             return PuzzleWinPage();
           }
           return LevelPage();
