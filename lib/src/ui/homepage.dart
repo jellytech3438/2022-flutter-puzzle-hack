@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
+import 'package:slide_puzzle/src/model/models.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
 import 'package:slide_puzzle/src/ui/levelchoose.dart';
 import 'package:slide_puzzle/src/ui/tutorialpage.dart';
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   late GameBloc _gameBloc;
   late PuzzleBloc _puzzleBloc;
 
-  List<bool> onHover = [false,false,false];
+  List<bool> onHover = [false,false,false,false];
 
   @override
   void initState() {
@@ -68,13 +69,13 @@ class _HomePageState extends State<HomePage> {
                                 child: AnimatedContainer(
                                   width: 180,
                                   decoration:BoxDecoration(
-                                    border: onHover[0] ? Border() : Border.all(color: Colors.black,),
+                                    border: onHover[3] ? Border() : Border.all(color: Colors.black,),
                                   ),
                                   padding: EdgeInsets.all(20),
                                   duration: Duration(milliseconds: 300),
                                   transform: Matrix4.identity(),
                                   child: AnimatedDefaultTextStyle(
-                                    style: onHover[0] ? TextStyle(fontSize: 28) : TextStyle(fontSize: 20),
+                                    style: onHover[3] ? TextStyle(fontSize: 28) : TextStyle(fontSize: 20),
                                     duration: Duration(milliseconds: 300),
                                     child: Center(
                                       child: Text(
@@ -92,12 +93,12 @@ class _HomePageState extends State<HomePage> {
                               ),
                               onEnter: (value){
                                 setState((){
-                                  onHover[0] = true;
+                                  onHover[3] = true;
                                 });
                               },
                               onExit: (value){
                                 setState((){
-                                  onHover[0] = false;
+                                  onHover[3] = false;
                                 });
                               }
                           ),
@@ -249,6 +250,7 @@ class _HomePageState extends State<HomePage> {
       print("get star : " + state.getstar.toString());
       if(_gameBloc.levelStars[state.completelevel] <= state.getstar){
         _gameBloc.levelStars[state.completelevel] = state.getstar;
+        _gameBloc.puzzleStatus[state.completelevel] = PuzzleStatus.complete;
       }
       return PuzzleWinPage(state.getstar);
     }else if(state is IsGameState){

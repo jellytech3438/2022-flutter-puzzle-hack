@@ -77,8 +77,7 @@ class _PuzzleWinPageState extends State<PuzzleWinPage> {
               onPressed:() {
                 setState(() {
                   _puzzleBloc.add(IsHome());
-                  _gameBloc.puzzleStatus[_gameBloc.level] = PuzzleStatus.complete;
-                  _gameBloc.add(ChooseLevel());
+                  // _gameBloc.add(ChooseLevel());
                 });
           }),
         ],

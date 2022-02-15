@@ -1046,7 +1046,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       this.state.puzzle.tiles[previoustiled.currentPosition.y][previoustiled.currentPosition.x] = tappedtile.copyWith(currentPosition: previoustiled.currentPosition);
     }
 
-    this.state.puzzle.tiles[tappedtile.currentPosition.y][tappedtile.currentPosition.x] = previoustiled.copyWith(currentPosition: tappedtile.currentPosition);;
+    this.state.puzzle.tiles[tappedtile.currentPosition.y][tappedtile.currentPosition.x] = previoustiled.copyWith(currentPosition: tappedtile.currentPosition);
     this.state.puzzle.tiles[previoustiled.currentPosition.y][previoustiled.currentPosition.x].tapped = false;
     this.state.puzzle.tiles[tappedtile.currentPosition.y][tappedtile.currentPosition.x].tapped = false;
 
@@ -1084,10 +1084,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     final kingbuttomright = event.kingtile[3];
     final nextspace = event.nexttile;
 
-    final tiles = this.state.puzzle.tiles;
-
     if(nextspace.value == ChessPieces.End){
-      /// TODO : make the score calculate in this state (or this event)
       int star = _calculateStar();
       emit(
         PuzzleWinState(level,star)

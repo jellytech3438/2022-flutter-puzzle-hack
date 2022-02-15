@@ -18,14 +18,11 @@ class _TutorialPageState extends State<TutorialPage> {
 
   final List<TargetFocus> targets = [];
 
-  late TargetPosition KingPosition;
-  bool foundFlag = false;
-
-  GlobalKey key0 = GlobalKey();
-  GlobalKey key1 = GlobalKey();
-  GlobalKey key2 = GlobalKey();
-  GlobalKey key3 = GlobalKey();
-  GlobalKey key4 = GlobalKey();
+  GlobalKey titilekey = GlobalKey();
+  GlobalKey chessmovesamplekey = GlobalKey();
+  GlobalKey enemykey = GlobalKey();
+  GlobalKey endflagkey = GlobalKey();
+  GlobalKey resetkey = GlobalKey();
 
   BoxBorder returnBorder(Tile t){
     if(t.value == ChessPieces.KingTopLeft){
@@ -60,11 +57,18 @@ class _TutorialPageState extends State<TutorialPage> {
   @override
   void initState(){
     super.initState();
+
+    double width = (window.physicalSize / window.devicePixelRatio).width;
+    double height = (window.physicalSize / window.devicePixelRatio).height;
+
+    print("width" + width.toString());
+    print("height" + height.toString());
+
     targets.add(
         TargetFocus(
             identify: "Welcome",
             enableOverlayTab: true,
-            targetPosition: TargetPosition(Size((window.physicalSize / window.devicePixelRatio).width/3*2,(window.physicalSize / window.devicePixelRatio).width/3*2),Offset((window.physicalSize / window.devicePixelRatio).width/5 ,(window.physicalSize / window.devicePixelRatio).height/3)),
+            targetPosition: TargetPosition(Size(55 * 4,55 * 4),Offset(width/2 - 55 * 2,height/2 - 55 * 2)),
             // targetPosition: TargetPosition(Size((window.physicalSize / window.devicePixelRatio).width ,(window.physicalSize / window.devicePixelRatio).height),Offset((window.physicalSize / window.devicePixelRatio).width/3 ,(window.physicalSize / window.devicePixelRatio).height/3)),
             contents: [
               TargetContent(
@@ -86,30 +90,6 @@ class _TutorialPageState extends State<TutorialPage> {
                     ],
                   )
               ),
-              // TargetContent(
-              //     customPosition: CustomTargetContentPosition(
-              //       top : 50,
-              //       left : 50,
-              //       right : 50,
-              //       bottom : 50,
-              //       // top :(window.physicalSize / window.devicePixelRatio).width/3,
-              //       // left :(window.physicalSize / window.devicePixelRatio).height/3,
-              //       // right :(window.physicalSize / window.devicePixelRatio).width/3*2,
-              //       // bottom :(window.physicalSize / window.devicePixelRatio).height/3*2,
-              //     ),
-              //     align: ContentAlign.custom,
-              //     child: Center(
-              //       child:Text(
-              //         "This is a test",
-              //         style: GoogleFonts.lato(
-              //             textStyle: TextStyle(
-              //                 fontSize: 30,
-              //                 color: Colors.black
-              //             )
-              //         ),
-              //       ),
-              //     )
-              // ),
             ]
         )
     );
@@ -117,7 +97,7 @@ class _TutorialPageState extends State<TutorialPage> {
         TargetFocus(
             identify: "Target 0",
             enableOverlayTab: true,
-            keyTarget: key0,
+            keyTarget: titilekey,
             paddingFocus: 10.0,
             contents: [
               TargetContent(
@@ -162,7 +142,7 @@ class _TutorialPageState extends State<TutorialPage> {
         TargetFocus(
             identify: "Target 1",
             enableOverlayTab: true,
-            keyTarget: key1,
+            keyTarget: chessmovesamplekey,
             paddingFocus: 10.0,
             contents: [
               TargetContent(
@@ -206,7 +186,7 @@ class _TutorialPageState extends State<TutorialPage> {
         TargetFocus(
             identify: "Target 2",
             enableOverlayTab: true,
-            keyTarget: key2,
+            keyTarget: enemykey,
             paddingFocus: 10.0,
             contents: [
               TargetContent(
@@ -262,7 +242,7 @@ class _TutorialPageState extends State<TutorialPage> {
         TargetFocus(
             identify: "Target 3",
             enableOverlayTab: true,
-            keyTarget: key3,
+            keyTarget: endflagkey,
             paddingFocus: 10.0,
             contents: [
               TargetContent(
@@ -305,7 +285,7 @@ class _TutorialPageState extends State<TutorialPage> {
         TargetFocus(
             identify: "Target 4",
             enableOverlayTab: true,
-            keyTarget: key4,
+            keyTarget: resetkey,
             paddingFocus: 10.0,
             contents: [
               TargetContent(
@@ -348,7 +328,7 @@ class _TutorialPageState extends State<TutorialPage> {
         TargetFocus(
             identify: "Finish",
             enableOverlayTab: true,
-            targetPosition: TargetPosition(Size((window.physicalSize / window.devicePixelRatio).width/3*2,(window.physicalSize / window.devicePixelRatio).width/3*2),Offset((window.physicalSize / window.devicePixelRatio).width/5 ,(window.physicalSize / window.devicePixelRatio).height/3)),
+            targetPosition: TargetPosition(Size(55 * 4,55 * 4),Offset(width/2 - 55 * 2,height/2 - 55 * 2)),
             // targetPosition: TargetPosition(Size((window.physicalSize / window.devicePixelRatio).width ,(window.physicalSize / window.devicePixelRatio).height),Offset((window.physicalSize / window.devicePixelRatio).width/3 ,(window.physicalSize / window.devicePixelRatio).height/3)),
             contents: [
               TargetContent(
@@ -388,7 +368,6 @@ class _TutorialPageState extends State<TutorialPage> {
         )
     );
     WidgetsBinding.instance!.addPostFrameCallback(_layout);
-
   }
 
   void _layout(_){
@@ -419,31 +398,32 @@ class _TutorialPageState extends State<TutorialPage> {
     )..show();
   }
 
-  // void foundKingPosition(){
-  //   for(List<Tile> l in _puzzleBloc.state.puzzle.tiles){
-  //     for(Tile t in l){
-  //       if(t.value == ChessPieces.KingTopLeft) {
-  //         double x = l.indexOf(t).toDouble();
-  //         double y = _puzzleBloc.state.puzzle.tiles.indexOf(l).toDouble();
-  //         KingPosition = TargetPosition(Size(55 * 2, 55 * 2),Offset(x,y));
-  //         print("Offset x : " + x.toString());
-  //         print("Offset y : " + y.toString());
-  //         break;
-  //       }
-  //     }
+  // bool foundFlag = false;
+  //
+  // GlobalKey? giveKeyAccordingValue(ChessPieces chessPieces){
+  //   if(chessPieces == ChessPieces.Pawn){
+  //     return chessmovesamplekey;
+  //   }else if(chessPieces == ChessPieces.EnemyKing){
+  //     return enemykey;
+  //   }else if(chessPieces == ChessPieces.End && foundFlag == false){
+  //     foundFlag = true;
+  //     return endflagkey;
   //   }
+  //   return null;
   // }
 
-  GlobalKey? giveKeyAccordingValue(ChessPieces chessPieces){
-    if(chessPieces == ChessPieces.Pawn){
-      return key1;
-    }else if(chessPieces == ChessPieces.EnemyKing){
-      return key2;
-    }else if(chessPieces == ChessPieces.End && foundFlag == false){
-      foundFlag = true;
-      return key3;
+  /// idk why the above method is ok in phone
+  /// but get error in web
+  /// so i precise check the position of the tile
+  GlobalKey? giveKeyAccordingValue(Tile t){
+    if(t.value == ChessPieces.Pawn){
+      return chessmovesamplekey;
+    }else if(t.value == ChessPieces.EnemyKing){
+      return enemykey;
+    }else if(t.value == ChessPieces.End && t.currentPosition == Position(x: 0,y: 7)){
+      return endflagkey;
     }
-   return null;
+    return null;
   }
 
   @override
@@ -460,7 +440,7 @@ class _TutorialPageState extends State<TutorialPage> {
           style: GoogleFonts.lato(
             textStyle: TextStyle(fontSize: 30),
           ),
-          key: key0,
+          key: titilekey,
         ),
         Padding(padding: EdgeInsets.all(20),),
         Text(
@@ -480,7 +460,7 @@ class _TutorialPageState extends State<TutorialPage> {
                   for(Tile t in list) SizedBox(
                       width: 55.0,
                       height: 55.0,
-                      key: giveKeyAccordingValue(t.value),
+                      key: giveKeyAccordingValue(t),
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -516,7 +496,7 @@ class _TutorialPageState extends State<TutorialPage> {
                 ),
               ),
               onPressed: () => _puzzleBloc.add(Tutorial()),
-              key: key4,
+              key: resetkey,
             ),
             Padding(padding: EdgeInsets.all(20),),
             TextButton(
