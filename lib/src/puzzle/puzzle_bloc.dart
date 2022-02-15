@@ -15,7 +15,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<TileUnTapped>(_onTileUnTapped);
     on<SwapTiles>(_onSwapTiles);
     on<SwapKingTiles>(_onSwapKinigTiles);
-    on<PuzzleReset>(_onPuzzleReset);
     on<PuzzleLose>(_onPuzzleLose);
   }
 
@@ -23,7 +22,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   late int getStars;
 
-  late int leftmovesteps;
+  /// first screen is feild leftmovestep is not initialized
+  late int leftmovesteps = _generateMoveTimes();
 
   late bool eatEnemy;
 
@@ -83,8 +83,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     final puzzle = _generatePuzzle();
     this.leftmovesteps = _generateMoveTimes();
     emit(
-      PuzzleState(
-        puzzle: puzzle
+      IsGameState(
+        puzzle
       ),
     );
   }
@@ -1114,16 +1114,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     if(this.leftmovesteps <= 0){
       this.add(PuzzleLose());
     }
-  }
-
-  void _onPuzzleReset(PuzzleReset event,Emitter<PuzzleState> emit){
-    final puzzle = _generatePuzzle();
-    this.leftmovesteps = _generateMoveTimes();
-    emit(
-      PuzzleState(
-        puzzle: puzzle,
-      ),
-    );
   }
 
   void _onPuzzleLose(PuzzleLose event,Emitter<PuzzleState> emit){

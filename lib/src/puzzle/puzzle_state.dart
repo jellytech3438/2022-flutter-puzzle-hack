@@ -26,6 +26,10 @@ class IsHomeState extends PuzzleState{
   IsHomeState() : super();
 }
 
+class IsGameState extends PuzzleState{
+  IsGameState(puzzle) : super(puzzle: puzzle);
+}
+
 class PuzzleLoseState extends PuzzleState{
   PuzzleLoseState() : super();
 }

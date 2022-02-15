@@ -58,10 +58,6 @@ class SwapKingTiles extends PuzzleEvent{
 
 }
 
-class PuzzleReset extends PuzzleEvent{
-  PuzzleReset();
-}
-
 class PuzzleLose extends PuzzleEvent{
   PuzzleLose();
 }

@@ -56,39 +56,11 @@ class _LevelPageState extends State<LevelPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-              child: Text(
-                'return',
-                style: GoogleFonts.lato(
-                  textStyle: TextStyle(fontSize: 20),
-                ),
-              ),
-              onPressed: () => _puzzleBloc.add(IsHome()),
-            ),
-            Padding(padding: EdgeInsets.all(20),),
-            TextButton(
-              child: Text(
-                'reset puzzle',
-                style: GoogleFonts.lato(
-                  textStyle: TextStyle(fontSize: 20),
-                ),
-              ),
-              onPressed: () => _puzzleBloc.add(PuzzleReset()),
-            ),
-            // Padding(padding: EdgeInsets.all(20),),
-            // TextButton(
-            //   child: Text(
-            //     'option',
-            //     style: GoogleFonts.lato(
-            //       textStyle: TextStyle(fontSize: 20),
-            //     ),
-            //   ),
-            //   onPressed: () => _gameBloc.add(GameInitialized()),
-            // ),
-          ],
+        Text(
+          'Level ${_puzzleBloc.level}',
+          style: GoogleFonts.lato(
+            textStyle: TextStyle(fontSize: 30),
+          ),
         ),
         Padding(padding: EdgeInsets.all(20),),
         Text(
@@ -130,7 +102,32 @@ class _LevelPageState extends State<LevelPage> {
               ),
             );
           }).toList(),
-        )
+        ),
+        Padding(padding: EdgeInsets.all(20),),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextButton(
+              child: Text(
+                'reset puzzle',
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(fontSize: 20),
+                ),
+              ),
+              onPressed: () => _puzzleBloc.add(PuzzleInitialized(_puzzleBloc.level)),
+            ),
+            Padding(padding: EdgeInsets.all(20),),
+            TextButton(
+              child: Text(
+                'return',
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(fontSize: 20),
+                ),
+              ),
+              onPressed: () => _puzzleBloc.add(IsHome()),
+            ),
+          ],
+        ),
       ],
     );
   }
