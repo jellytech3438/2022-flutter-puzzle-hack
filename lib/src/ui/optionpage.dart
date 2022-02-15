@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
@@ -14,14 +13,7 @@ class OptionPage extends StatefulWidget {
 class _OptionPageState extends State<OptionPage> {
 
   bool isBlack = true;
-
-  final _controller1 = CircleColorPickerController(
-    initialColor: Colors.white,
-  );
-
-  final _controller2 = CircleColorPickerController(
-    initialColor: Colors.black,
-  );
+  List<bool> boardtheme = [true,false,false];
 
   @override
   Widget build(BuildContext context) {
@@ -114,24 +106,130 @@ class _OptionPageState extends State<OptionPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // CircleColorPicker(
-              //   controller: _controller1,
-              //   onChanged: (color) {
-              //
-              //   },
-              //   size: const Size(150, 150),
-              //   strokeWidth: 4,
-              //   thumbSize: 36,
-              // ),
-              // CircleColorPicker(
-              //   controller: _controller2,
-              //   onChanged: (color) {
-              //
-              //   },
-              //   size: const Size(150, 150),
-              //   strokeWidth: 4,
-              //   thumbSize: 36,
-              // ),
+              Checkbox(
+                checkColor: Colors.white,
+                fillColor: MaterialStateProperty.resolveWith(getColor),
+                value: _puzzle.boardtheme[0],
+                onChanged: (bool? value) {
+                  setState(() {
+                    if(value! == true){
+                      if(boardtheme[1] == true){
+                        boardtheme[1] = false;
+                        boardtheme[0] = value;
+                      }
+                      if(boardtheme[2] == true){
+                        boardtheme[2] = false;
+                        boardtheme[0] = value;
+                      }
+                    }
+                    if(value == false){
+                      if(boardtheme[1] == false && boardtheme[2] == false){
+                        boardtheme[0] = true;
+                      }
+                    }
+                    _puzzle.boardtheme = boardtheme;
+                  });
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.all(20),
+              ),
+              Container(
+                width: 80,
+                height: 80,
+                color: Colors.white,
+              ),
+              Container(
+                width: 80,
+                height: 80,
+                color: Colors.black45,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Checkbox(
+                checkColor: Colors.white,
+                fillColor: MaterialStateProperty.resolveWith(getColor),
+                value: _puzzle.boardtheme[1],
+                onChanged: (bool? value) {
+                  setState(() {
+                    if(value! == true){
+                      if(boardtheme[0] == true){
+                        boardtheme[0] = false;
+                        boardtheme[1] = value;
+                      }
+                      if(boardtheme[2] == true){
+                        boardtheme[2] = false;
+                        boardtheme[1] = value;
+                      }
+                    }
+                    if(value == false){
+                      if(boardtheme[0] == false && boardtheme[2] == false){
+                        boardtheme[1] = true;
+                      }
+                    }
+                    _puzzle.boardtheme = boardtheme;
+                  });
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.all(20),
+              ),
+              Container(
+                width: 80,
+                height: 80,
+                color: Color.fromRGBO(238,238,213,1.0),
+              ),
+              Container(
+                width: 80,
+                height: 80,
+                color: Color.fromRGBO(125,148,93,1.0),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Checkbox(
+                checkColor: Colors.white,
+                fillColor: MaterialStateProperty.resolveWith(getColor),
+                value: _puzzle.boardtheme[2],
+                onChanged: (bool? value) {
+                  setState(() {
+                    if(value! == true){
+                      if(boardtheme[0] == true){
+                        boardtheme[0] = false;
+                        boardtheme[2] = value;
+                      }
+                      if(boardtheme[1] == true){
+                        boardtheme[1] = false;
+                        boardtheme[2] = value;
+                      }
+                    }
+                    if(value == false){
+                      if(boardtheme[0] == false && boardtheme[1] == false){
+                        boardtheme[2] = true;
+                      }
+                    }
+                    _puzzle.boardtheme = boardtheme;
+                  });
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.all(20),
+              ),
+              Container(
+                width: 80,
+                height: 80,
+                color: Color.fromRGBO(239,217,183,1.0),
+              ),
+              Container(
+                width: 80,
+                height: 80,
+                color: Color.fromRGBO(180,136,102,1.0),
+              ),
             ],
           ),
           Padding(

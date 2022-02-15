@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
-import 'package:slide_puzzle/src/model/models.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
 
 class PuzzleWinPage extends StatefulWidget {

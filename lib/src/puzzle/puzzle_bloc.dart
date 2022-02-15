@@ -30,6 +30,11 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   bool isBlack = true;
 
+  List<bool> boardtheme = [true,false,false];
+
+  List<Color> lightColor = [Colors.white,Color.fromRGBO(238,238,213,1.0),Color.fromRGBO(239,217,183,1.0)];
+  List<Color> darkColor = [Colors.black45,Color.fromRGBO(125,148,93,1.0),Color.fromRGBO(180,136,102,1.0)];
+
   TileMovementStatus tileMovementStatus;
 
   Tile? tiletapped;

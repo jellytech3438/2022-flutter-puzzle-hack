@@ -30,8 +30,6 @@ dependencies:
   frideos: any
   gap: any
   provider: any
-  flutter_circle_color_picker: any
-  highlighter_coachmark: any
   tutorial_coach_mark: any
 
   # The following adds the Cupertino Icons font to your application.

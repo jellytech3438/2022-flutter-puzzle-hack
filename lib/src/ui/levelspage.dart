@@ -46,6 +46,30 @@ class _LevelPageState extends State<LevelPage> {
     );
   }
 
+  Color getLightBoardColor(PuzzleBloc puzzleBloc){
+    int i = 0;
+    for(bool select in puzzleBloc.boardtheme){
+      if(select == true){
+        return puzzleBloc.lightColor[i];
+      }else{
+        i++;
+      }
+    }
+    return puzzleBloc.lightColor[0];
+  }
+
+  Color getDarkBoardColor(PuzzleBloc puzzleBloc){
+    int i = 0;
+    for(bool select in puzzleBloc.boardtheme){
+      if(select == true){
+        return puzzleBloc.darkColor[i];
+      }else{
+        i++;
+      }
+    }
+    return puzzleBloc.darkColor[0];
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -93,8 +117,7 @@ class _LevelPageState extends State<LevelPage> {
                             decoration: BoxDecoration(
                                 border: returnBorder(t),
                                 color: t.value == ChessPieces.Block ? Colors.transparent : t.tapped ? Colors.green : t
-                                    .currentPosition.isEven() ? Colors
-                                    .white : Colors.black45
+                                    .currentPosition.isEven() ? getLightBoardColor(_puzzleBloc) : getDarkBoardColor(_puzzleBloc)
                             ),
                             child: ChessImage(t.value,_puzzleBloc.isBlack)
                         ),

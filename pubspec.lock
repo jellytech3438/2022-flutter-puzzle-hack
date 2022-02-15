@@ -104,13 +104,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.0.1"
-  flutter_circle_color_picker:
-    dependency: "direct main"
-    description:
-      name: flutter_circle_color_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -137,13 +130,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
-  highlighter_coachmark:
-    dependency: "direct main"
-    description:
-      name: highlighter_coachmark
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   http:
     dependency: transitive
     description:
