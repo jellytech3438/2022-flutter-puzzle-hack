@@ -11,6 +11,10 @@ class PuzzleInitialized extends PuzzleEvent {
   List<Object> get props => [level];
 }
 
+class Tutorial extends PuzzleEvent{
+  Tutorial();
+}
+
 class PressedTile extends PuzzleEvent{
   PressedTile(this.tile);
 

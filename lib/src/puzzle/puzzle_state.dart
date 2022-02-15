@@ -22,6 +22,10 @@ class PuzzleState {
   }
 }
 
+class TutorialState extends PuzzleState{
+  TutorialState(puzzle) : super(puzzle: puzzle);
+}
+
 class IsHomeState extends PuzzleState{
   IsHomeState() : super();
 }

@@ -37,6 +37,8 @@ class _LevelPageState extends State<LevelPage> {
           bottom: BorderSide(color: Colors.black, width: 2),
           right: BorderSide(color: Colors.black, width: 2)
       );
+    }else if(t.value == ChessPieces.Block){
+      return Border();
     }
     return Border.all(
         color: Colors.black,
@@ -90,7 +92,7 @@ class _LevelPageState extends State<LevelPage> {
                         child: Container(
                             decoration: BoxDecoration(
                                 border: returnBorder(t),
-                                color: t.tapped ? Colors.green : t
+                                color: t.value == ChessPieces.Block ? Colors.transparent : t.tapped ? Colors.green : t
                                     .currentPosition.isEven() ? Colors
                                     .white : Colors.black45
                             ),

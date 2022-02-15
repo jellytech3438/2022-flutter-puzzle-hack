@@ -32,6 +32,7 @@ dependencies:
   provider: any
   flutter_circle_color_picker: any
   highlighter_coachmark: any
+  tutorial_coach_mark: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

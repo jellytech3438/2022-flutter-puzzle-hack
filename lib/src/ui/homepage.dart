@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
 import 'package:slide_puzzle/src/ui/levelchoose.dart';
+import 'package:slide_puzzle/src/ui/tutorialpage.dart';
 
 import 'winpage.dart';
 import 'levelspage.dart';
@@ -60,6 +61,50 @@ class _HomePageState extends State<HomePage> {
                     // }
                     return Column(
                       children: [
+                        Center(
+                          child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child:GestureDetector(
+                                child: AnimatedContainer(
+                                  width: 180,
+                                  decoration:BoxDecoration(
+                                    border: onHover[0] ? Border() : Border.all(color: Colors.black,),
+                                  ),
+                                  padding: EdgeInsets.all(20),
+                                  duration: Duration(milliseconds: 300),
+                                  transform: Matrix4.identity(),
+                                  child: AnimatedDefaultTextStyle(
+                                    style: onHover[0] ? TextStyle(fontSize: 28) : TextStyle(fontSize: 20),
+                                    duration: Duration(milliseconds: 300),
+                                    child: Center(
+                                      child: Text(
+                                        'How to play?',
+                                        style: GoogleFonts.lato(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    _puzzleBloc.add(Tutorial());
+                                  });
+                                },
+                              ),
+                              onEnter: (value){
+                                setState((){
+                                  onHover[0] = true;
+                                });
+                              },
+                              onExit: (value){
+                                setState((){
+                                  onHover[0] = false;
+                                });
+                              }
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(20),
+                        ),
                         Center(
                           child: MouseRegion(
                             cursor: SystemMouseCursors.click,
@@ -196,6 +241,8 @@ class _HomePageState extends State<HomePage> {
             ],
           )
       );
+    }else if(state is TutorialState){
+      return TutorialPage();
     }else if(state is PuzzleLoseState){
       return PuzzleLosePage();
     }else if(state is PuzzleWinState){

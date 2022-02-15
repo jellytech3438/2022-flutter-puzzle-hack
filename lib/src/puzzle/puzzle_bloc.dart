@@ -10,6 +10,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   PuzzleBloc(this.level,this.tileMovementStatus,) : super(const PuzzleState()) {
     on<IsHome>(_onIsHome);
     on<PuzzleInitialized>(_onPuzzleInitialized);
+    on<Tutorial>(_onTutorial);
     on<PressedTile>(_onPressedTile);
     on<TileTapped>(_onTileTapped);
     on<TileUnTapped>(_onTileUnTapped);
@@ -35,6 +36,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   int _calculateStar(){
     switch(this.level){
+      case 0:
+        return 3;
       case 1:
         if(leftmovesteps >= 3){
           return 3;
@@ -64,6 +67,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   int _generateMoveTimes(){
     switch(level){
+      case 0:
+        return 100;
       case 1:
         return 10;
       case 2:
@@ -85,6 +90,17 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     emit(
       IsGameState(
         puzzle
+      ),
+    );
+  }
+
+  void _onTutorial(Tutorial event, Emitter<PuzzleState> emit){
+    this.level = 0;
+    final puzzle = _generatePuzzle();
+    this.leftmovesteps = _generateMoveTimes();
+    emit(
+      TutorialState(
+          puzzle
       ),
     );
   }
@@ -170,22 +186,22 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     if(tappedTile.value == ChessPieces.Pawn){
       Position p = tappedTile.currentPosition;
       if(p.x+1 < maxX){
-        if(this.state.puzzle.tiles[p.y][p.x+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][p.x+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][p.x+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][p.x+1].tapped = true;
         }
       }
       if(p.x-1 >= 0){
-        if(this.state.puzzle.tiles[p.y][p.x-1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][p.x-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][p.x-1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][p.x-1].tapped = true;
         }
       }
       if(p.y+1 < maxY){
-        if(this.state.puzzle.tiles[p.y+1][p.x].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+1][p.x].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+1][p.x].tapped = true;
         }
       }
       if(p.y-1 >= 0){
-        if(this.state.puzzle.tiles[p.y-1][p.x].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-1][p.x].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-1][p.x].tapped = true;
         }
       }
@@ -194,42 +210,42 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     if(tappedTile.value == ChessPieces.Knight){
       Position p = tappedTile.currentPosition;
       if(p.y - 2 >= 0 && p.x - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y-2][p.x-1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-2][p.x-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-2][p.x-1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-2][p.x-1].tapped = true;
         }
       }
       if(p.y - 1 >= 0 && p.x - 2 >= 0){
-        if(this.state.puzzle.tiles[p.y-1][p.x-2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-1][p.x-2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-1][p.x-2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-1][p.x-2].tapped = true;
         }
       }
       if(p.y + 1 < maxY && p.x - 2 >= 0){
-        if(this.state.puzzle.tiles[p.y+1][p.x-2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+1][p.x-2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+1][p.x-2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+1][p.x-2].tapped = true;
         }
       }
       if(p.y + 2 < maxY && p.x - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y+2][p.x-1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+2][p.x-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+2][p.x-1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+2][p.x-1].tapped = true;
         }
       }
       if(p.y + 2 < maxY && p.x + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y+2][p.x+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+2][p.x+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+2][p.x+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+2][p.x+1].tapped = true;
         }
       }
       if(p.y + 1 < maxY && p.x + 2 < maxX){
-        if(this.state.puzzle.tiles[p.y+1][p.x+2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+1][p.x+2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+1][p.x+2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+1][p.x+2].tapped = true;
         }
       }
       if(p.y - 1 >= 0 && p.x + 2 < maxX){
-        if(this.state.puzzle.tiles[p.y-1][p.x+2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-1][p.x+2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-1][p.x+2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-1][p.x+2].tapped = true;
         }
       }
       if(p.y - 2 >= 0 && p.x + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y-2][p.x+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-2][p.x+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-2][p.x+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-2][p.x+1].tapped = true;
         }
       }
@@ -241,7 +257,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       int tempY = p.y;
 
       while(tempX - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[p.y][tempX-1].tapped = true;
         }else{
           break;
@@ -250,7 +266,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][p.x].tapped = true;
         }else{
           break;
@@ -262,7 +278,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][tempX+1].tapped = true;
         }else{
           break;
@@ -271,7 +287,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][p.x].tapped = true;
         }else{
           break;
@@ -285,7 +301,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       int tempX = p.x;
       int tempY = p.y;
       while(tempX - 1 >= 0 && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][tempX-1].tapped = true;
         }else{
           break;
@@ -298,7 +314,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX - 1 >= 0 && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX-1].tapped = true;
         }else{
           break;
@@ -311,7 +327,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[tempY-1][tempX+1].tapped = true;
         }else{
           break;
@@ -324,7 +340,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX+1].tapped = true;
         }else{
           break;
@@ -339,7 +355,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       int tempX = p.x;
       int tempY = p.y;
       while(tempX - 1 >= 0 && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][tempX-1].tapped = true;
         }else{
           break;
@@ -352,7 +368,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX - 1 >= 0 && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX-1].tapped = true;
         }else{
           break;
@@ -365,7 +381,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[tempY-1][tempX+1].tapped = true;
         }else{
           break;
@@ -378,7 +394,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX+1].tapped = true;
         }else{
           break;
@@ -391,7 +407,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[p.y][tempX-1].tapped = true;
         }else{
           break;
@@ -400,7 +416,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][p.x].tapped = true;
         }else{
           break;
@@ -412,7 +428,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][tempX+1].tapped = true;
         }else{
           break;
@@ -421,7 +437,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][p.x].tapped = true;
         }else{
           break;
@@ -601,22 +617,22 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       /// may out of size, NEED to be fix
 
       if(p.x+1 < maxX){
-        if(this.state.puzzle.tiles[p.y][p.x+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][p.x+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][p.x+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][p.x+1].tapped = false;
         }
       }
       if(p.x-1 >= 0){
-        if(this.state.puzzle.tiles[p.y][p.x-1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][p.x-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][p.x-1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][p.x-1].tapped = false;
         }
       }
       if(p.y+1 < maxY){
-        if(this.state.puzzle.tiles[p.y+1][p.x].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+1][p.x].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+1][p.x].tapped = false;
         }
       }
       if(p.y-1 >= 0){
-        if(this.state.puzzle.tiles[p.y-1][p.x].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-1][p.x].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-1][p.x].tapped = false;
         }
       }
@@ -625,42 +641,42 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     if(tappedTile.value == ChessPieces.Knight){
       Position p = tappedTile.currentPosition;
       if(p.y - 2 >= 0 && p.x - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y-2][p.x-1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-2][p.x-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-2][p.x-1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-2][p.x-1].tapped = false;
         }
       }
       if(p.y - 1 >= 0 && p.x - 2 >= 0){
-        if(this.state.puzzle.tiles[p.y-1][p.x-2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-1][p.x-2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-1][p.x-2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-1][p.x-2].tapped = false;
         }
       }
       if(p.y + 1 < maxY && p.x - 2 >= 0){
-        if(this.state.puzzle.tiles[p.y+1][p.x-2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+1][p.x-2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+1][p.x-2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+1][p.x-2].tapped = false;
         }
       }
       if(p.y + 2 < maxY && p.x - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y+2][p.x-1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+2][p.x-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+2][p.x-1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+2][p.x-1].tapped = false;
         }
       }
       if(p.y + 2 < maxY && p.x + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y+2][p.x+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+2][p.x+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+2][p.x+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+2][p.x+1].tapped = false;
         }
       }
       if(p.y + 1 < maxY && p.x + 2 < maxX){
-        if(this.state.puzzle.tiles[p.y+1][p.x+2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y+1][p.x+2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y+1][p.x+2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y+1][p.x+2].tapped = false;
         }
       }
       if(p.y - 1 >= 0 && p.x + 2 < maxX){
-        if(this.state.puzzle.tiles[p.y-1][p.x+2].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-1][p.x+2].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-1][p.x+2].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-1][p.x+2].tapped = false;
         }
       }
       if(p.y - 2 >= 0 && p.x + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y-2][p.x+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y-2][p.x+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y-2][p.x+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y-2][p.x+1].tapped = false;
         }
       }
@@ -672,7 +688,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       int tempY = p.y;
 
       while(tempX - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[p.y][tempX-1].tapped = false;
         }else{
           break;
@@ -681,7 +697,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][p.x].tapped = false;
         }else{
           break;
@@ -693,7 +709,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][tempX+1].tapped = false;
         }else{
           break;
@@ -702,7 +718,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][p.x].tapped = false;
         }else{
           break;
@@ -716,7 +732,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       int tempX = p.x;
       int tempY = p.y;
       while(tempX - 1 >= 0 && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][tempX-1].tapped = false;
         }else{
           break;
@@ -729,7 +745,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX - 1 >= 0 && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX-1].tapped = false;
         }else{
           break;
@@ -742,7 +758,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[tempY-1][tempX+1].tapped = false;
         }else{
           break;
@@ -755,7 +771,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX+1].tapped = false;
         }else{
           break;
@@ -770,7 +786,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       int tempX = p.x;
       int tempY = p.y;
       while(tempX - 1 >= 0 && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][tempX-1].tapped = false;
         }else{
           break;
@@ -783,7 +799,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX - 1 >= 0 && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX-1].tapped = false;
         }else{
           break;
@@ -796,7 +812,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[tempY-1][tempX+1].tapped = false;
         }else{
           break;
@@ -809,7 +825,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX && tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][tempX+1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][tempX+1].tapped = false;
         }else{
           break;
@@ -822,7 +838,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX - 1 >= 0){
-        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX-1].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[p.y][tempX-1].tapped = false;
         }else{
           break;
@@ -831,7 +847,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY - 1 >= 0){
-        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY-1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY-1][p.x].tapped = false;
         }else{
           break;
@@ -843,7 +859,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       tempY = p.y;
 
       while(tempX + 1 < maxX){
-        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space){
+        if(this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.Space || this.state.puzzle.tiles[p.y][tempX+1].value == ChessPieces.EnemyKing){
           this.state.puzzle.tiles[p.y][tempX+1].tapped = false;
         }else{
           break;
@@ -852,7 +868,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       }
 
       while(tempY + 1 < maxY){
-        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space) {
+        if(this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.Space || this.state.puzzle.tiles[tempY+1][p.x].value == ChessPieces.EnemyKing) {
           this.state.puzzle.tiles[tempY+1][p.x].tapped = false;
         }else{
           break;
@@ -1024,7 +1040,12 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     final previoustiled = event.tappedtile;
     final tappedtile = event.nexttile;
 
-    this.state.puzzle.tiles[previoustiled.currentPosition.y][previoustiled.currentPosition.x] = tappedtile.copyWith(currentPosition: previoustiled.currentPosition);
+    if(tappedtile.value == ChessPieces.EnemyKing){
+      this.state.puzzle.tiles[previoustiled.currentPosition.y][previoustiled.currentPosition.x] = tappedtile.trunToSpace().copyWith(currentPosition: previoustiled.currentPosition);
+    }else{
+      this.state.puzzle.tiles[previoustiled.currentPosition.y][previoustiled.currentPosition.x] = tappedtile.copyWith(currentPosition: previoustiled.currentPosition);
+    }
+
     this.state.puzzle.tiles[tappedtile.currentPosition.y][tappedtile.currentPosition.x] = previoustiled.copyWith(currentPosition: tappedtile.currentPosition);;
     this.state.puzzle.tiles[previoustiled.currentPosition.y][previoustiled.currentPosition.x].tapped = false;
     this.state.puzzle.tiles[tappedtile.currentPosition.y][tappedtile.currentPosition.x].tapped = false;
