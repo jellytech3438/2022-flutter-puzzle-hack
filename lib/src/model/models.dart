@@ -2,8 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-/// enemy king is to get point(eatable piece so )
 enum ChessPieces{
   King,Queen,Rook,Bishop,Knight,Pawn,
   Space,
@@ -24,7 +22,6 @@ class Position extends Equatable implements Comparable<Position> {
 
   @override
   int compareTo(Position other) {
-    /// in the official setting, the position compare y first and then x
     if (y < other.y) {
       return -1;
     } else if (y > other.y) {
@@ -182,21 +179,175 @@ class Puzzle{
         break;
       case 2:
         tiles..add([
-          Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 0)),
-          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 0)),
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 0,y: 0)),
+          Tile(value: ChessPieces.Knight, currentPosition: Position(x: 1,y: 0)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 0)),
         ])..add([
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 1)),
-          Tile(value: ChessPieces.Queen, currentPosition: Position(x: 1,y: 1)),
+          Tile(value: ChessPieces.KingTopLeft, currentPosition: Position(x: 1,y: 1)),
+          Tile(value: ChessPieces.KingTopRight, currentPosition: Position(x: 2,y: 1)),
+        ])..add([
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 0,y: 2)),
+          Tile(value: ChessPieces.KingButtomLeft, currentPosition: Position(x: 1,y: 2)),
+          Tile(value: ChessPieces.KingButtomRight, currentPosition: Position(x: 2,y: 2)),
+        ])..add([
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 0,y: 3)),
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 1,y: 3)),
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 2,y: 3)),
+        ])..add([
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 4)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 1,y: 4)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 2,y: 4)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 5)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 1,y: 5)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 2,y: 5)),
+        ])..add([
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 0,y: 6)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 1,y: 6)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 2,y: 6)),
+        ]);
+        break;
+      case 3:
+        tiles..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 0)),
+          Tile(value: ChessPieces.Bishop, currentPosition: Position(x: 1,y: 0)),
+          Tile(value: ChessPieces.KingTopLeft, currentPosition: Position(x: 2,y: 0)),
+          Tile(value: ChessPieces.KingTopRight, currentPosition: Position(x: 3,y: 0)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 4,y: 0)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 5,y: 0)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 1)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 1,y: 1)),
+          Tile(value: ChessPieces.KingButtomLeft, currentPosition: Position(x: 2,y: 1)),
+          Tile(value: ChessPieces.KingButtomRight, currentPosition: Position(x: 3,y: 1)),
+          Tile(value: ChessPieces.Bishop, currentPosition: Position(x: 4,y: 1)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 5,y: 1)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 2)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 1,y: 2)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 2)),
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 3,y: 2)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 4,y: 2)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 5,y: 2)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 3)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 1,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 3,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 3)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 5,y: 3)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 3,y: 4)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 4,y: 4)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 5,y: 4)),
+        ])..add([
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 0,y: 5)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 1,y: 5)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 5)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 3,y: 5)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 4,y: 5)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 5,y: 5)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 6)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 1,y: 6)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 2,y: 6)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 3,y: 6)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 4,y: 6)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 5,y: 6)),
+        ]);
+        break;
+      case 4:
+        tiles..add([
+          Tile(value: ChessPieces.Queen, currentPosition: Position(x: 0,y: 0)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 0)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 0)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 3,y: 0)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 0)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 5,y: 0)),
+        ])..add([
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 1)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 1)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 1)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 3,y: 1)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 1)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 5,y: 1)),
+        ])..add([
+          Tile(value: ChessPieces.KingTopLeft, currentPosition: Position(x: 0,y: 2)),
+          Tile(value: ChessPieces.KingTopRight, currentPosition: Position(x: 1,y: 2)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 2,y: 2)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 3,y: 2)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 2)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 5,y: 2)),
+        ])..add([
+          Tile(value: ChessPieces.KingButtomLeft, currentPosition: Position(x: 0,y: 3)),
+          Tile(value: ChessPieces.KingButtomRight, currentPosition: Position(x: 1,y: 3)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 2,y: 3)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 3,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 5,y: 3)),
+        ])..add([
+          Tile(value: ChessPieces.Queen, currentPosition: Position(x: 0,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 4)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 3,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 5,y: 4)),
+        ])..add([
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 5)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 5)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 5)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 3,y: 5)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 4,y: 5)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 5,y: 5)),
+        ]);
+        break;
+      case 5:
+        tiles..add([
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 0,y: 0)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 0)),
+          Tile(value: ChessPieces.KingTopLeft, currentPosition: Position(x: 2,y: 0)),
+          Tile(value: ChessPieces.KingTopRight, currentPosition: Position(x: 3,y: 0)),
+          Tile(value: ChessPieces.Rook, currentPosition: Position(x: 4,y: 0)),
+        ])..add([
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 1)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 1)),
+          Tile(value: ChessPieces.KingButtomLeft, currentPosition: Position(x: 2,y: 1)),
+          Tile(value: ChessPieces.KingButtomRight, currentPosition: Position(x: 3,y: 1)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 1)),
         ])..add([
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 0,y: 2)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 2)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 2)),
+          Tile(value: ChessPieces.Knight, currentPosition: Position(x: 3,y: 2)),
+          Tile(value: ChessPieces.Bishop, currentPosition: Position(x: 4,y: 2)),
         ])..add([
-          Tile(value: ChessPieces.End, currentPosition: Position(x: 0,y: 3)),
-          Tile(value: ChessPieces.End, currentPosition: Position(x: 1,y: 3)),
+          Tile(value: ChessPieces.Queen, currentPosition: Position(x: 0,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 1,y: 3)),
           Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 3)),
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 3,y: 3)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 3)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 4)),
+          Tile(value: ChessPieces.Pawn, currentPosition: Position(x: 1,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 2,y: 4)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 3,y: 4)),
+          Tile(value: ChessPieces.Space, currentPosition: Position(x: 4,y: 4)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 5)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 1,y: 5)),
+          Tile(value: ChessPieces.EnemyKing, currentPosition: Position(x: 2,y: 5)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 3,y: 5)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 4,y: 5)),
+        ])..add([
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 0,y: 6)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 1,y: 6)),
+          Tile(value: ChessPieces.End, currentPosition: Position(x: 2,y: 6)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 3,y: 6)),
+          Tile(value: ChessPieces.Block, currentPosition: Position(x: 4,y: 6)),
         ]);
         break;
     }
@@ -207,8 +358,6 @@ class Puzzle{
 enum PuzzleStatus { incomplete, complete }
 
 enum TileMovementStatus { nothingTapped, tapped, cannotBeMoved, moved }
-
-enum ScreenViewType {tutorialView, controlView, completeView}
 
 class ChessImage extends StatelessWidget {
 
@@ -341,74 +490,3 @@ class ChessImage extends StatelessWidget {
 }
 
 enum NextDirection{Left,Right,Top,Bottom}
-
-class OnHover extends StatefulWidget {
-  final Widget Function(bool isHovered) builder;
-  const OnHover({Key? key, required this.builder}) : super(key: key);
-  @override
-  _OnHoverState createState() => _OnHoverState();
-}
-class _OnHoverState extends State<OnHover> {
-  bool isHovered = false;
-  @override
-  Widget build(BuildContext context) {
-    final hovered = Matrix4.identity()..scale(1.5);
-    final transform = isHovered ? hovered : Matrix4.identity();
-    return MouseRegion(
-      onEnter: (_)=> onEntered(true),
-      onExit: (_)=> onEntered(false),
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 300),
-        transform: transform,
-        child: widget.builder(isHovered),
-      ),
-    );
-  }
-  void onEntered(bool isHovered){
-    setState(() {
-      this.isHovered = isHovered;
-    });
-  }
-}
-
-class MySelectionItem extends StatelessWidget {
-  final String? title;
-  final bool isForList;
-
-  const MySelectionItem({Key? key, this.title, this.isForList = true}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60.0,
-      child: isForList
-          ? Padding(
-        child: _buildItem(context),
-        padding: EdgeInsets.all(10.0),
-      )
-          : Card(
-        margin: EdgeInsets.symmetric(horizontal: 10.0),
-        child: Stack(
-          children: <Widget>[
-            _buildItem(context),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Icon(Icons.arrow_drop_down),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildItem(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.center,
-      child: FittedBox(
-          child: Text(
-            title!,
-          )),
-    );
-  }
-}

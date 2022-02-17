@@ -26,42 +26,57 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   /// first screen is feild leftmovestep is not initialized
   late int leftmovesteps = _generateMoveTimes();
 
-  late bool eatEnemy;
+  bool eatEnemy = true;
 
   bool isBlack = true;
 
   List<bool> boardtheme = [true,false,false];
 
-  List<Color> lightColor = [Colors.white,Color.fromRGBO(238,238,213,1.0),Color.fromRGBO(239,217,183,1.0)];
-  List<Color> darkColor = [Colors.black45,Color.fromRGBO(125,148,93,1.0),Color.fromRGBO(180,136,102,1.0)];
+  ThemeData theme = ThemeData(
+      primaryColorLight: Colors.white,
+      primaryColorDark:  Colors.black45,
+      selectedRowColor: Colors.green
+  );
 
   TileMovementStatus tileMovementStatus;
 
   Tile? tiletapped;
 
   int _calculateStar(){
+    int tempcnt = 0;
+    for(List<Tile> l in this.state.puzzle.tiles){
+      for(Tile t in l){
+        if(t.value == ChessPieces.EnemyKing){
+          eatEnemy = false;
+        }
+      }
+    }
+    if(eatEnemy == true) tempcnt += 1;
+
     switch(this.level){
       case 0:
         return 3;
       case 1:
-        if(leftmovesteps >= 3){
-          return 3;
-        }
+        if(leftmovesteps >= 3) tempcnt = 3;
         break;
       case 2:
-        if(leftmovesteps >= 5 && eatEnemy){
-          return 3;
-        }else if(leftmovesteps <= 5 && eatEnemy){
-          return 2;
-        }else if(leftmovesteps >= 5 && !eatEnemy){
-          return 2;
-        }else if(leftmovesteps <= 5 && !eatEnemy){
-          return 1;
-        }
+        if(leftmovesteps >= 5) tempcnt += 2;
+        else if(leftmovesteps < 5 ) tempcnt += 1;
         break;
-      // case 3:
+      case 3:
+        if(leftmovesteps >= 5) tempcnt += 2;
+        else if(leftmovesteps < 5 ) tempcnt += 1;
+        break;
+      case 4:
+        if(leftmovesteps >= 5) tempcnt += 2;
+        else if(leftmovesteps < 5 ) tempcnt += 1;
+        break;
+      case 5:
+        if(leftmovesteps >= 5) tempcnt += 2;
+        else if(leftmovesteps < 5 ) tempcnt += 1;
+        break;
     }
-    return 0;
+    return tempcnt;
   }
 
   Puzzle _generatePuzzle(){
@@ -77,7 +92,13 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       case 1:
         return 10;
       case 2:
-        return 10;
+        return 20;
+      case 3:
+        return 20;
+      case 4:
+        return 20;
+      case 5:
+        return 20;
     }
     return 10;
   }
@@ -1091,6 +1112,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
     if(nextspace.value == ChessPieces.End){
       int star = _calculateStar();
+      print("get star : " + star.toString());
+      print("complete level : " + level.toString());
       emit(
         PuzzleWinState(level,star)
       );

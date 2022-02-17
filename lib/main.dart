@@ -25,7 +25,9 @@ class _MyAppState extends State<MyApp> {
         1,
         List.filled(10, PuzzleStatus.incomplete)
           ..[0] = PuzzleStatus.complete,
-        List.filled(10, 0)
+        List.filled(11, 0),
+        true
+        /// star count from 1 to 10
     );
     _puzzleBloc = PuzzleBloc(
         1,TileMovementStatus.nothingTapped

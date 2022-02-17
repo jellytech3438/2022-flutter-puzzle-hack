@@ -13,13 +13,32 @@ class OptionPage extends StatefulWidget {
 class _OptionPageState extends State<OptionPage> {
 
   bool isBlack = true;
-  List<bool> boardtheme = [true,false,false];
+
+  ThemeData classic = ThemeData(
+      primaryColorLight: Colors.white,
+      primaryColorDark:  Colors.black45,
+      selectedRowColor: Colors.green
+  );
+
+  ThemeData newstyle = ThemeData(
+      primaryColorLight: Color.fromRGBO(238,238,213,1.0),
+      primaryColorDark:  Color.fromRGBO(125,148,93,1.0),
+      selectedRowColor: Color.fromRGBO(186, 202, 66, 1.0)
+  );
+
+  ThemeData plank = ThemeData(
+      primaryColorLight: Color.fromRGBO(239,217,183,1.0),
+      primaryColorDark:  Color.fromRGBO(180,136,102,1.0),
+      selectedRowColor: Color.fromRGBO(239, 204, 112, 1.0)
+  );
 
   @override
   Widget build(BuildContext context) {
 
     GameBloc _game = BlocProvider.of<GameBloc>(context);
     PuzzleBloc _puzzle = BlocProvider.of<PuzzleBloc>(context);
+
+    List<bool> selectTheme = _puzzle.boardtheme;
     isBlack = _puzzle.isBlack;
 
     Color getColor(Set<MaterialState> states) {
@@ -32,6 +51,28 @@ class _OptionPageState extends State<OptionPage> {
         return Colors.blue;
       }
       return Colors.blue;
+    }
+    
+    Widget _arrangeColor(ThemeData theme){
+      return Row(
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            color: theme.primaryColorLight,
+          ),
+          Container(
+            width: 80,
+            height: 80,
+            color: theme.primaryColorDark,
+          ),
+          Container(
+            width: 80,
+            height: 80,
+            color: theme.selectedRowColor,
+          ),
+        ],
+      );
     }
 
     return Container(
@@ -109,41 +150,30 @@ class _OptionPageState extends State<OptionPage> {
               Checkbox(
                 checkColor: Colors.white,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
-                value: _puzzle.boardtheme[0],
+                value: selectTheme[0],
                 onChanged: (bool? value) {
                   setState(() {
                     if(value! == true){
-                      if(boardtheme[1] == true){
-                        boardtheme[1] = false;
-                        boardtheme[0] = value;
+                      for(int i = 0;i<selectTheme.length;i++){
+                        if(selectTheme[i] == true && i != 0){
+                          _puzzle.boardtheme[i] = false;
+                        }
                       }
-                      if(boardtheme[2] == true){
-                        boardtheme[2] = false;
-                        boardtheme[0] = value;
-                      }
+                      _puzzle.boardtheme[0] = value;
+                      _puzzle.theme = classic;
                     }
                     if(value == false){
-                      if(boardtheme[1] == false && boardtheme[2] == false){
-                        boardtheme[0] = true;
+                      if(selectTheme[1] == false && selectTheme[2] == false){
+                        _puzzle.boardtheme[0] = true;
                       }
                     }
-                    _puzzle.boardtheme = boardtheme;
                   });
                 },
               ),
               Padding(
                 padding: EdgeInsets.all(20),
               ),
-              Container(
-                width: 80,
-                height: 80,
-                color: Colors.white,
-              ),
-              Container(
-                width: 80,
-                height: 80,
-                color: Colors.black45,
-              ),
+              _arrangeColor(classic)
             ],
           ),
           Row(
@@ -156,37 +186,26 @@ class _OptionPageState extends State<OptionPage> {
                 onChanged: (bool? value) {
                   setState(() {
                     if(value! == true){
-                      if(boardtheme[0] == true){
-                        boardtheme[0] = false;
-                        boardtheme[1] = value;
+                      for(int i = 0;i<selectTheme.length;i++){
+                        if(selectTheme[i] == true && i != 1){
+                          _puzzle.boardtheme[i] = false;
+                        }
                       }
-                      if(boardtheme[2] == true){
-                        boardtheme[2] = false;
-                        boardtheme[1] = value;
-                      }
+                      _puzzle.boardtheme[1] = value;
+                      _puzzle.theme = newstyle;
                     }
                     if(value == false){
-                      if(boardtheme[0] == false && boardtheme[2] == false){
-                        boardtheme[1] = true;
+                      if(selectTheme[0] == false && selectTheme[2] == false){
+                        _puzzle.boardtheme[1] = true;
                       }
                     }
-                    _puzzle.boardtheme = boardtheme;
                   });
                 },
               ),
               Padding(
                 padding: EdgeInsets.all(20),
               ),
-              Container(
-                width: 80,
-                height: 80,
-                color: Color.fromRGBO(238,238,213,1.0),
-              ),
-              Container(
-                width: 80,
-                height: 80,
-                color: Color.fromRGBO(125,148,93,1.0),
-              ),
+              _arrangeColor(newstyle)
             ],
           ),
           Row(
@@ -199,37 +218,26 @@ class _OptionPageState extends State<OptionPage> {
                 onChanged: (bool? value) {
                   setState(() {
                     if(value! == true){
-                      if(boardtheme[0] == true){
-                        boardtheme[0] = false;
-                        boardtheme[2] = value;
+                      for(int i = 0;i<selectTheme.length;i++){
+                        if(selectTheme[i] == true && i != 2){
+                          _puzzle.boardtheme[i] = false;
+                        }
                       }
-                      if(boardtheme[1] == true){
-                        boardtheme[1] = false;
-                        boardtheme[2] = value;
-                      }
+                      _puzzle.boardtheme[2] = value;
+                      _puzzle.theme = plank;
                     }
                     if(value == false){
-                      if(boardtheme[0] == false && boardtheme[1] == false){
-                        boardtheme[2] = true;
+                      if(selectTheme[0] == false && selectTheme[1] == false){
+                        _puzzle.boardtheme[2] = true;
                       }
                     }
-                    _puzzle.boardtheme = boardtheme;
                   });
                 },
               ),
               Padding(
                 padding: EdgeInsets.all(20),
               ),
-              Container(
-                width: 80,
-                height: 80,
-                color: Color.fromRGBO(239,217,183,1.0),
-              ),
-              Container(
-                width: 80,
-                height: 80,
-                color: Color.fromRGBO(180,136,102,1.0),
-              ),
+              _arrangeColor(plank)
             ],
           ),
           Padding(

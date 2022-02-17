@@ -13,7 +13,7 @@ part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
-  GameBloc(this.level,this.puzzleStatus,this.levelStars) : super(const GameState()) {
+  GameBloc(this.level,this.puzzleStatus,this.levelStars,this.themeisWhite) : super(const GameState()) {
     // event is input
     // state is output
     // on<input>(function that emit new state or just do something)
@@ -30,6 +30,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   List<PuzzleStatus> puzzleStatus;
 
   List<int> levelStars;
+
+  bool themeisWhite;
 
   // Event Handler
 

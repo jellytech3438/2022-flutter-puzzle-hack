@@ -46,30 +46,6 @@ class _LevelPageState extends State<LevelPage> {
     );
   }
 
-  Color getLightBoardColor(PuzzleBloc puzzleBloc){
-    int i = 0;
-    for(bool select in puzzleBloc.boardtheme){
-      if(select == true){
-        return puzzleBloc.lightColor[i];
-      }else{
-        i++;
-      }
-    }
-    return puzzleBloc.lightColor[0];
-  }
-
-  Color getDarkBoardColor(PuzzleBloc puzzleBloc){
-    int i = 0;
-    for(bool select in puzzleBloc.boardtheme){
-      if(select == true){
-        return puzzleBloc.darkColor[i];
-      }else{
-        i++;
-      }
-    }
-    return puzzleBloc.darkColor[0];
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -112,12 +88,12 @@ class _LevelPageState extends State<LevelPage> {
                             _puzzleBloc.add(PressedTile(t));
                           });
                         },
-                        // onLongPress: ,
-                        child: Container(
+                        child: AnimatedContainer(
+                            duration: Duration(milliseconds: 150),
                             decoration: BoxDecoration(
                                 border: returnBorder(t),
-                                color: t.value == ChessPieces.Block ? Colors.transparent : t.tapped ? Colors.green : t
-                                    .currentPosition.isEven() ? getLightBoardColor(_puzzleBloc) : getDarkBoardColor(_puzzleBloc)
+                                color: t.value == ChessPieces.Block ? Colors.transparent : t.tapped ? _puzzleBloc.theme.selectedRowColor : t
+                                    .currentPosition.isEven() ? _puzzleBloc.theme.primaryColorLight : _puzzleBloc.theme.primaryColorDark
                             ),
                             child: ChessImage(t.value,_puzzleBloc.isBlack)
                         ),
