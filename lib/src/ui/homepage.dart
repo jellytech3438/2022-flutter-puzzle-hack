@@ -1,8 +1,10 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rive/rive.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
 import 'package:slide_puzzle/src/model/models.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
@@ -23,12 +25,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   late GameBloc _gameBloc;
   late PuzzleBloc _puzzleBloc;
-  late AnimationController _animationController;
-  late RenderBox box;
 
-  GlobalKey _logoKey = GlobalKey();
+  Artboard? _riveArtboard;
+  SMIInput<bool>? _pressInput;
+
+  bool isPlaying = false;
 
   List<bool> onHover = [false,false,false,false];
+
+  ThemeData blackTheme = ThemeData(
+    brightness: Brightness.dark,
+    primaryColorLight: Colors.black,
+    primaryColorDark: Colors.white
+  );
+  ThemeData whiteTheme = ThemeData(
+    brightness: Brightness.light,
+    primaryColorLight: Colors.white,
+    primaryColorDark: Colors.black
+  );
+
+
+  GlobalKey switherGlobalKey = GlobalKey();
 
   @override
   void initState() {
@@ -37,13 +54,37 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     _gameBloc = BlocProvider.of<GameBloc>(context);
     _puzzleBloc = BlocProvider.of<PuzzleBloc>(context);
 
-    _animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 200));
+    rootBundle.load('assets/logoAnimation.riv').then((data) async {
+        // Load the RiveFile from the binary data.
+        final file = RiveFile.import(data);
+        final artboard = file.mainArtboard;
+        var controller = StateMachineController.fromArtboard(artboard, 'State Machine 1');
+
+        if (controller != null) {
+          artboard.addController(controller);
+          _pressInput = controller.findInput('isPlaying');
+        }
+
+        setState(() => _riveArtboard = artboard);
+      },
+    );
   }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
+  void _playLogoAnimation(BuildContext context){
+    print(_pressInput!.value.toString() + " " + _pressInput!.controller.isActive.toString());
+    if(_pressInput!.value == false && _pressInput!.controller.isActive == false){
+      _pressInput!.value = true;
+    }else if(_pressInput!.value == true && _pressInput!.controller.isActive == true){
+      _pressInput!.value = false;
+    }else if(_pressInput!.value == true && _pressInput!.controller.isActive == false){
+      _pressInput!.value = false;
+      _pressInput!.controller.isActive = true;
+    }
+    print(_pressInput!.value.toString() + " " + _pressInput!.controller.isActive.toString());
+    ThemeSwitcher.of(context)!.changeTheme(
+        theme: ThemeProvider.of(context)!.brightness == Brightness.light ? blackTheme : whiteTheme,
+        reverseAnimation: false // default: false
+    );
   }
 
   Widget _buildAccordingPuzzleState(context, state){
@@ -54,25 +95,48 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Stack(
                     children: [
-                      Text(
-                        'Chessl',
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(fontSize: 45),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50,),
+                        child: Text(
+                          'Chessl',
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(fontSize: 50),
+                            color: ThemeProvider.of(context)!.primaryColorDark
+                          ),
                         ),
                       ),
-                      Image.asset(
-                        "lib/assets/LogoI.png",
-                        width: 25,
-                        height: 45,
-                        key: _logoKey,
+                      ThemeSwitcher(
+                        builder: (context){
+                          return Padding(
+                            padding:const EdgeInsets.only(left: 90),
+                            child: _riveArtboard == null ? Container(
+                              child: Text(
+                                'i',
+                                style: GoogleFonts.lato(
+                                    textStyle: TextStyle(fontSize: 50),
+                                    color: ThemeProvider.of(context)!.primaryColorDark
+                                ),
+                              ),
+                            ) : Container(
+                              width: 150,
+                              height: 100,
+                              child: Rive(
+                                artboard: _riveArtboard!,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      Text(
-                        'de puzzle',
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(fontSize: 45),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50,left: 166,),
+                        child: Text(
+                          'de puzzle',
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(fontSize: 50),
+                            color: ThemeProvider.of(context)!.primaryColorDark
+                          ),
                         ),
                       ),
                     ],
@@ -98,7 +162,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   child: AnimatedContainer(
                                     width: 180,
                                     decoration:BoxDecoration(
-                                      border: onHover[3] ? Border() : Border.all(color: Colors.black,),
+                                      border: onHover[3] ? Border() : Border.all(color: ThemeProvider.of(context)!.primaryColorDark,),
                                     ),
                                     padding: EdgeInsets.only(top: 20,bottom: 20),
                                     duration: Duration(milliseconds: 300),
@@ -109,7 +173,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                       child: Center(
                                         child: Text(
                                           'How to play?',
-                                          style: GoogleFonts.lato(),
+                                          style: GoogleFonts.lato(
+                                              textStyle: TextStyle(
+                                                  color: ThemeProvider.of(context)!.primaryColorDark
+                                              )
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -142,7 +210,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 child: AnimatedContainer(
                                   width: 180,
                                   decoration:BoxDecoration(
-                                    border: onHover[0] ? Border() : Border.all(color: Colors.black,),
+                                    border: onHover[0] ? Border() : Border.all(color: ThemeProvider.of(context)!.primaryColorDark,),
                                   ),
                                   padding: EdgeInsets.all(20),
                                   duration: Duration(milliseconds: 300),
@@ -153,7 +221,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                     child: Center(
                                       child: Text(
                                         'start game',
-                                        style: GoogleFonts.lato(),
+                                        style: GoogleFonts.lato(
+                                          textStyle: TextStyle(
+                                            color: ThemeProvider.of(context)!.primaryColorDark
+                                          )
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -186,7 +258,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   child: AnimatedContainer(
                                     width: 180,
                                     decoration:BoxDecoration(
-                                      border: onHover[1] ? Border() : Border.all(color: Colors.black,),
+                                      border: onHover[1] ? Border() : Border.all(color: ThemeProvider.of(context)!.primaryColorDark,),
                                     ),
                                     padding: EdgeInsets.all(20),
                                     duration: Duration(milliseconds: 300),
@@ -197,7 +269,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                       child: Center(
                                         child: Text(
                                           'option',
-                                          style: GoogleFonts.lato(),
+                                          style: GoogleFonts.lato(
+                                              textStyle: TextStyle(
+                                                  color: ThemeProvider.of(context)!.primaryColorDark
+                                              )
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -230,7 +306,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   child: AnimatedContainer(
                                     width: 180,
                                     decoration:BoxDecoration(
-                                      border: onHover[2] ? Border() : Border.all(color: Colors.black,),
+                                      border: onHover[2] ? Border() : Border.all(color: ThemeProvider.of(context)!.primaryColorDark,),
                                     ),
                                     padding: EdgeInsets.all(20),
                                     duration: Duration(milliseconds: 300),
@@ -241,7 +317,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                       child: Center(
                                         child: Text(
                                           'exit',
-                                          style: GoogleFonts.lato(),
+                                          style: GoogleFonts.lato(
+                                              textStyle: TextStyle(
+                                                  color: ThemeProvider.of(context)!.primaryColorDark
+                                              )
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -272,20 +352,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             )
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: AnimatedBuilder(
-          animation: _animationController,
-          builder: (context,child){
-            box = _logoKey.currentContext?.findRenderObject() as RenderBox;
-            return child!;
+        floatingActionButton: ThemeSwitcher(
+          builder: (context){
+            return FloatingActionButton(
+              tooltip: "change theme",
+              backgroundColor: ThemeProvider.of(context)!.primaryColorDark,
+              child: Icon(
+                Icons.cached,
+                color: ThemeProvider.of(context)!.primaryColorLight,
+              ),
+              onPressed: () {
+                /// until the animation end will do nothing pressing the button
+                _pressInput!.controller.isActive == true ? null : _playLogoAnimation(context);
+              },
+            );
           },
-          child: FloatingActionButton(
-            backgroundColor: Colors.black,
-            child: Icon(Icons.cached),
-            onPressed: () {
-
-              print('change theme');
-            },
-          ),
         ),
       );
     }else if(state is TutorialState){

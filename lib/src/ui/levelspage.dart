@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,29 +20,29 @@ class _LevelPageState extends State<LevelPage> {
   BoxBorder returnBorder(Tile t){
     if(t.value == ChessPieces.KingTopLeft){
       return Border(
-        top: BorderSide(color: Colors.black, width: 2),
-        left: BorderSide(color: Colors.black, width: 2)
+        top: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2),
+        left: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2)
       );
     }else if(t.value == ChessPieces.KingTopRight){
       return Border(
-          top: BorderSide(color: Colors.black, width: 2),
-          right: BorderSide(color: Colors.black, width: 2)
+          top: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2),
+          right: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2)
       );
     }else if(t.value == ChessPieces.KingButtomLeft){
       return Border(
-          bottom: BorderSide(color: Colors.black, width: 2),
-          left: BorderSide(color: Colors.black, width: 2)
+          bottom: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2),
+          left: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2)
       );
     }else if(t.value == ChessPieces.KingButtomRight){
       return Border(
-          bottom: BorderSide(color: Colors.black, width: 2),
-          right: BorderSide(color: Colors.black, width: 2)
+          bottom: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2),
+          right: BorderSide(color: ThemeProvider.of(context)!.primaryColorDark, width: 2)
       );
     }else if(t.value == ChessPieces.Block){
       return Border();
     }
     return Border.all(
-        color: Colors.black,
+        color: ThemeProvider.of(context)!.primaryColorDark,
         width: 2
     );
   }

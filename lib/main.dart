@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
@@ -45,9 +46,29 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) => _puzzleBloc..add(IsHome()),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
+      child: ThemeProvider(
+        initTheme: ThemeData(
+            brightness: Brightness.light,
+            primaryColorLight: Colors.white,
+            primaryColorDark: Colors.black
+        ),
+        builder: (_,theme){
+          return MaterialApp(
+            theme: theme,
+            darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                primaryColorLight: Colors.black,
+                primaryColorDark: Colors.white
+            ),
+            themeMode: ThemeMode.dark,
+            debugShowCheckedModeBanner: false,
+            home: ThemeSwitchingArea(child: HomePage()),
+          );
+        },
+        // child: MaterialApp(
+        //   debugShowCheckedModeBanner: false,
+        //   home: HomePage(),
+        // ),
       ),
     );
   }
