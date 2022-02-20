@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _gameBloc = GameBloc(
         1,
-        List.filled(10, PuzzleStatus.complete)
+        List.filled(10, PuzzleStatus.incomplete)
           ..[0] = PuzzleStatus.complete,
         List.filled(11, 0),
         true

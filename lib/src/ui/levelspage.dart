@@ -47,6 +47,18 @@ class _LevelPageState extends State<LevelPage> {
     );
   }
 
+  double getBoardSize(context,puzzleWidth){
+    double screenWidth = MediaQuery.of(context).size.width;
+    if(screenWidth / puzzleWidth >= 75){
+      return 75.0;
+    }else if(screenWidth / puzzleWidth >= 65){
+      return 65.0;
+    }else if(screenWidth / puzzleWidth >= 55){
+      return 55.0;
+    }
+    return 50.0;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -81,8 +93,8 @@ class _LevelPageState extends State<LevelPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   for(Tile t in list) Container(
-                      width: 75.0,
-                      height: 75.0,
+                      width: getBoardSize(context, _puzzleBloc.state.puzzle.tiles[0].length),
+                      height: getBoardSize(context, _puzzleBloc.state.puzzle.tiles[0].length),
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
