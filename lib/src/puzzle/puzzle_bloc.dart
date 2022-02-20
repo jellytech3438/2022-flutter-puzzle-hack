@@ -26,15 +26,13 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   /// first screen is feild leftmovestep is not initialized
   late int leftmovesteps = _generateMoveTimes();
 
-  bool eatEnemy = true;
-
   bool isBlack = true;
 
   List<bool> boardtheme = [true,false,false];
 
   ThemeData theme = ThemeData(
-      primaryColorLight: Colors.white,
-      primaryColorDark:  Colors.black45,
+      primaryColorLight: Color.fromRGBO(255,255,255, 1.0),
+      primaryColorDark:  Color.fromRGBO(110,110,110, 1.0),
       selectedRowColor: Colors.green
   );
 
@@ -43,6 +41,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   Tile? tiletapped;
 
   int _calculateStar(){
+    bool eatEnemy = true;
     int tempcnt = 0;
     for(List<Tile> l in this.state.puzzle.tiles){
       for(Tile t in l){
@@ -60,20 +59,40 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         if(leftmovesteps >= 3) tempcnt = 3;
         break;
       case 2:
-        if(leftmovesteps >= 5) tempcnt += 2;
-        else if(leftmovesteps < 5 ) tempcnt += 1;
+        if(leftmovesteps >= 3) tempcnt += 2;
+        else tempcnt += 1;
         break;
       case 3:
         if(leftmovesteps >= 5) tempcnt += 2;
-        else if(leftmovesteps < 5 ) tempcnt += 1;
+        else tempcnt += 1;
         break;
       case 4:
         if(leftmovesteps >= 5) tempcnt += 2;
-        else if(leftmovesteps < 5 ) tempcnt += 1;
+        else tempcnt += 1;
         break;
       case 5:
+        if(leftmovesteps >= 3) tempcnt += 2;
+        else tempcnt += 1;
+        break;
+      case 6:
+        if(leftmovesteps >= 3) tempcnt += 2;
+        else tempcnt += 1;
+        break;
+      case 7:
+        if(leftmovesteps >= 3) tempcnt += 2;
+        else tempcnt += 1;
+        break;
+      case 8:
         if(leftmovesteps >= 5) tempcnt += 2;
-        else if(leftmovesteps < 5 ) tempcnt += 1;
+        else tempcnt += 1;
+        break;
+      case 9:
+        if(leftmovesteps >= 5) tempcnt += 2;
+        else tempcnt += 1;
+        break;
+      case 10:
+        if(leftmovesteps >= 2) tempcnt += 2;
+        else tempcnt += 1;
         break;
     }
     return tempcnt;
@@ -92,13 +111,23 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       case 1:
         return 10;
       case 2:
-        return 20;
+        return 10;
       case 3:
-        return 20;
+        return 15;
       case 4:
         return 20;
       case 5:
+        return 15;
+      case 6:
+        return 15;
+      case 7:
+        return 10;
+      case 8:
+        return 15;
+      case 9:
         return 20;
+      case 10:
+        return 10;
     }
     return 10;
   }

@@ -15,8 +15,8 @@ class _OptionPageState extends State<OptionPage> {
   bool isBlack = true;
 
   ThemeData classic = ThemeData(
-      primaryColorLight: Colors.white,
-      primaryColorDark:  Colors.black45,
+      primaryColorLight: Color.fromRGBO(255,255,255, 1.0),
+      primaryColorDark:  Color.fromRGBO(105,105,105, 1.0),
       selectedRowColor: Colors.green
   );
 

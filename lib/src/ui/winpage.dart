@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rive/rive.dart';
 import 'package:slide_puzzle/src/game/game_bloc.dart';
 import 'package:slide_puzzle/src/puzzle/puzzle_bloc.dart';
 
@@ -11,7 +10,33 @@ class PuzzleWinPage extends StatefulWidget {
   _PuzzleWinPageState createState() => _PuzzleWinPageState();
 }
 
-class _PuzzleWinPageState extends State<PuzzleWinPage> {
+class _PuzzleWinPageState extends State<PuzzleWinPage> with SingleTickerProviderStateMixin{
+
+  late AnimationController controller;
+  late Animation<double> rotateAnimation;
+  late Animation<double> resizeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+    rotateAnimation = Tween(begin: 0.0, end: 1.0).animate(controller)
+    ..addListener(() {
+        setState(() {});
+      });
+    resizeAnimation = Tween(begin: 300.0, end: 3.0).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    controller.forward();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +50,7 @@ class _PuzzleWinPageState extends State<PuzzleWinPage> {
             'Congratulation!',
             style: GoogleFonts.lato(
                 textStyle: TextStyle(
-                    fontSize: 30
+                    fontSize: 45
                 )
             ),
           ),
@@ -58,20 +83,30 @@ class _PuzzleWinPageState extends State<PuzzleWinPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               for(int j = 0;j < _gameBloc.levelStars[_puzzleBloc.level];j++)
-                // Container(
-                //   width: 100,
-                //   height: 100,
-                //   child: RiveAnimation.asset(
-                //     'rotateStar.riv',
-                //   ),
-                // ),
-                Icon(
-                  Icons.star,
-                  color: Colors.amber,
+                RotationTransition(
+                  turns: rotateAnimation,
+                  child: ScaleTransition(
+                    scale: resizeAnimation,
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: 18,
+                      ),
+                    ),
+                  )
                 ),
-              for(int j = 0;j < 3 - _gameBloc.levelStars[_puzzleBloc.level];j++) Icon(
-                Icons.star_border,
-              )
+              for(int j = 0;j < 3 - _gameBloc.levelStars[_puzzleBloc.level];j++)
+                Container(
+                  width: 50,
+                  child: Icon(
+                    Icons.star_border,
+                    size: 50,
+                  ),
+                )
             ],
           ),
           Padding(

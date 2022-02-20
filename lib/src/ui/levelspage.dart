@@ -80,7 +80,7 @@ class _LevelPageState extends State<LevelPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for(Tile t in list) SizedBox(
+                  for(Tile t in list) Container(
                       width: 75.0,
                       height: 75.0,
                       child: GestureDetector(
