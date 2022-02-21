@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.slide_puzzle">
    <application
-        android:label="slide_puzzle"
+        android:label="chesslide"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
