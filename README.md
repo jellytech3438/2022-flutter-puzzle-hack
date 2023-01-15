@@ -6,6 +6,10 @@ Belows are About the project
 (because markdown seems not support dart currently,so the code block
 language is going to be java)
 
+## Reward
+
+[<img src="https://github.com/710242/2022-flutter-puzzle-hack/blob/master/image.png">](https://devpost.com/software/chesslide-puzzle-game)
+
 ## Inspiration
 
 This project is inspired by a slide puzzle called "Klotski".
